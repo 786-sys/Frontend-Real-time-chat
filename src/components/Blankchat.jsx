@@ -1,5 +1,6 @@
 import React from 'react'
-
+import dotenv from "dotenv";
+dotenv.config();
 const Blankchat = ({setuser}) => {
   return (
     <div className='flex flex-col items-center justify-center gap-2 text-gray-500 bg-white/10 max-md:hidden w-[70%]'>

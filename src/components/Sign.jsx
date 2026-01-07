@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Desc from "./Desc";
+import dotenv from "dotenv";
+dotenv.config();
 const Sign = ({ register,setsigntrue ,fullname,email,password , description}) => {
   
   const [isdesc,setisdesc]=useState(false);

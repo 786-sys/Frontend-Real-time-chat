@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import dotenv from "dotenv";
 import { useNavigate } from "react-router-dom";
+dotenv.config();
 
 const Profilepage = () => {
   const [Name, setName] = useState("");

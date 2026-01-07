@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import socket from "../Socket/socket.js";
 import { Navigate, useNavigate } from "react-router-dom";
-
+import dotenv from "dotenv";
+dotenv.config();
 const Sidebar = ({
   list,
   isonline,

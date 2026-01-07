@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-
+import dotenv from "dotenv";
+dotenv.config();
 const Desc = ({description,register,isdesc,setisdesc}) => {
     const [isbio,setisbio]=useState(true)
     const checkbio=()=>{

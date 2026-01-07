@@ -1,4 +1,6 @@
 import React, { use } from 'react'
+import dotenv from "dotenv";
+dotenv.config();
 
 const Rightsider = ({useritem, msglist}) => {
   return (
