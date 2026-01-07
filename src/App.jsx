@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 // import './App.css'
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
-import Homepage from "./Pages/Homepage";
-import Profilepage from "./Pages/Profilepage";
-import Loginpage from "./Pages/Loginpage";
-import Login from "./components/login.jsx";
+import Homepage from "./Pages/Homepage.jsx";
+import Profilepage from "./Pages/Profilepage.jsx";
+import Loginpage from "./Pages/Loginpage.jsx";
 import socket from "./Socket/socket.js";
 import dotenv from "dotenv";
+dotenv.config();
 function App() {
   useEffect(() => {
     socket.on("connect", () => {
