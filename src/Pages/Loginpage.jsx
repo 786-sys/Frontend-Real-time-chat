@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Sign from "../components/Sign";
-import Login from "../components/login";
+import Sign from "../components/Sign.jsx";
+import Login from "../components/Login.jsx";
 import { useNavigate } from "react-router-dom";
 const Loginpage = () => {
   const [signtrue, setsigntrue] = useState(true);

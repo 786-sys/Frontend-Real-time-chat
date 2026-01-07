@@ -1,6 +1,5 @@
 import React, { use, useEffect, useState } from "react";
 import socket from "../Socket/socket.js";
-import { set } from "mongoose";
 const Chatbox = ({ useritem, curr, msglist, setmsglist}) => {
   const [msg, setmsg] = useState("");
   const [image, setImage] = useState(null);
