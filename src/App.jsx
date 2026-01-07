@@ -7,7 +7,9 @@ import Profilepage from "./Pages/Profilepage.jsx";
 import Loginpage from "./Pages/Loginpage.jsx";
 import socket from "./Socket/socket.js";
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({
+  path: "./.env",
+});
 function App() {
   useEffect(() => {
     socket.on("connect", () => {

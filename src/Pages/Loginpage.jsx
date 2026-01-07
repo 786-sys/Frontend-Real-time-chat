@@ -3,7 +3,9 @@ import Sign from "../components/Sign.jsx";
 import Login from "../components/Login.jsx";
 import { useNavigate } from "react-router-dom";
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({
+  path: "./.env",
+});
 const Loginpage = () => {
   const [signtrue, setsigntrue] = useState(true);
   const navigate = useNavigate();
