@@ -37,8 +37,8 @@ function App() {
       if (response.ok) {
         const resp = await response.json();
         console.log(resp.data);
+        console.log(resp.data.length);
         setarray(resp.data);
-        showNotification("Loaded ✅", "User list fetched");
       }
     } catch (err) {
       console.log("fetching the list problem " + err);
