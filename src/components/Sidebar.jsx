@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import socket from "../Socket/socket.js";
 import { Navigate, useNavigate } from "react-router-dom";
-import dotenv from "dotenv";
-dotenv.config({
-  path: "./.env",
-});
+
 const Sidebar = ({
   list,
   isonline,
@@ -41,7 +38,7 @@ const Sidebar = ({
     if (isConfirmed) {
       try {
         const response = await fetch(
-          `${process.env.backend_url}/api/v1/user/logout`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/logout`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

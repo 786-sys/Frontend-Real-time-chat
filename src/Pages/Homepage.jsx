@@ -5,10 +5,7 @@ import Rightsider from "../components/Rightsider";
 import Chatbox from "../components/Chatbox";
 import Blankchat from "../components/Blankchat";
 import socket from "../Socket/socket.js";
-import dotenv from "dotenv";
-dotenv.config({
-  path: "./.env",
-});
+
 const Homepage = ({ array, itemuser, setitemuser, curr }) => {
   const [selectedUser, setselectedUser] = useState(false);
   const [isonline, setisonline] = useState([]);

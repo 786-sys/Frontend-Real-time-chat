@@ -56,7 +56,7 @@ const Chatbox = ({ useritem, curr, msglist, setmsglist}) => {
     const loadMessages = async () => {
       try {
         const response = await fetch(
-          `${process.env.backend_url}/api/v1/message/display/${curr._id}/${useritem._id}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/message/display/${curr._id}/${useritem._id}`,
           { method: "GET", credentials: "include" }
         );
 
@@ -85,7 +85,7 @@ const Chatbox = ({ useritem, curr, msglist, setmsglist}) => {
 
       try {
         const response = await fetch(
-          `${process.env.backend_url}/api/v1/message/imageupload`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/message/imageupload`,
           {
             method: "POST",
             body: formData,

@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import Sign from "../components/Sign.jsx";
 import Login from "../components/Login.jsx";
 import { useNavigate } from "react-router-dom";
-import dotenv from "dotenv";
-dotenv.config({
-  path: "./.env",
-});
+
 const Loginpage = () => {
   const [signtrue, setsigntrue] = useState(true);
   const navigate = useNavigate();
@@ -16,7 +13,7 @@ const Loginpage = () => {
   const Register = async () => {
     try {
       const response = await fetch(
-        `${process.env.backend_url}/api/v1/user/register`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/register`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -44,7 +41,7 @@ const Loginpage = () => {
     try {
       console.log(email + " hi " + password);
       const response = await fetch(
-        `${process.env.backend_url}/api/v1/user/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -6,10 +6,6 @@ import Homepage from "./Pages/Homepage.jsx";
 import Profilepage from "./Pages/Profilepage.jsx";
 import Loginpage from "./Pages/Loginpage.jsx";
 import socket from "./Socket/socket.js";
-import dotenv from "dotenv";
-dotenv.config({
-  path: "./.env",
-});
 function App() {
   useEffect(() => {
     socket.on("connect", () => {
@@ -32,7 +28,7 @@ function App() {
   const Display = async () => {
     try {
       const response = await fetch(
-        `${process.env.backend_url}/api/v1/user/DisplayList`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/DisplayList`,
         {
           method: "GET",
           credentials: "include",
@@ -55,7 +51,7 @@ function App() {
   const GetUserProfile = async () => {
     try {
       const response = await fetch(
-        `${process.env.backend_url}/api/v1/user/getUserProfile`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/getUserProfile`,
         {
           method: "GET",
           credentials: "include",

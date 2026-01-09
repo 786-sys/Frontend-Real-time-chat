@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import dotenv from "dotenv";
-import { useNavigate } from "react-router-dom";
-dotenv.config({
-  path: "./.env",
-});
+
 
 const Profilepage = () => {
   const [Name, setName] = useState("");
@@ -20,7 +17,7 @@ const Profilepage = () => {
   const GetUserProfile = async () => {
     try {
       const response = await fetch(
-        `${process.env.backend_url}/api/v1/user/getUserProfile`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/getUserProfile`,
         {
           method: "GET",
           credentials: "include",
@@ -70,7 +67,7 @@ const Profilepage = () => {
 
     try {
       const response = await fetch(
-        `${process.env.backend_url}/api/v1/user/UpdateProfile`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/UpdateProfile`,
         {
           method: "PUT",
           body: formData,
