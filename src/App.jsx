@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import './App.css'
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
 import Homepage from "./Pages/Homepage.jsx";
