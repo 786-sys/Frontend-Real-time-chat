@@ -37,6 +37,7 @@ function App() {
       if (response.ok) {
         const resp = await response.json();
         console.log(resp.data);
+        console.log(resp.message);
         console.log(resp.data.length);
         setarray(resp.data);
       }
