@@ -5,6 +5,7 @@ import Homepage from "./Pages/Homepage.jsx";
 import Profilepage from "./Pages/Profilepage.jsx";
 import Loginpage from "./Pages/Loginpage.jsx";
 import socket from "./Socket/socket.js";
+import bgImage from "./assets/bgImage.svg"
 function App() {
   useEffect(() => {
     socket.on("connect", () => {
@@ -78,7 +79,7 @@ function App() {
 
   return (
     <>
-      <div className="bg-[url('./src/assets/bgImage.svg')] bg-cover bg-center h-screen w-full">
+      <div className={`bg-[url(${bgImage})] bg-cover bg-center h-screen w-full`}>
         <Routes>
           <Route
             path="/Homepage"
