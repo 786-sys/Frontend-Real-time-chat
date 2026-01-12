@@ -30,7 +30,8 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
                   border-2 border-gray-600 rounded-2xl
                   overflow-hidden`}
       >
-        <Sidebar
+       <div className="hidden md:w-[30%]">
+         <Sidebar
           list={array}
           isonline={isonline}
           setisonline={setisonline}
@@ -40,6 +41,7 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
           user={selectedUser}
           setuser={setselectedUser}
         />
+       </div>
         {selectedUser ? (
           <div className="flex flex-row flex-1">
             <Chatbox
