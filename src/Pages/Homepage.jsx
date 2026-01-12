@@ -41,8 +41,7 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
                 <img onClick={()=>{setselectedUser(false)}} className="w-[20px]" src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="" />
               </button>
             <Chatbox useritem={itemuser} curr={curr} msglist={msglist} setmsglist={setmsglist} />
-          </div>
-
+          </div>  
             </>:
             <>
           <Sidebar
