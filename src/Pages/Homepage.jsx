@@ -25,14 +25,14 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
   console.log("homepage re rendered " + selectedUser);
 
   return (
-    <div className={`border w-full h-screen sm:py-[15%] sm:py-[15%] md:${setresponsive(false)}`}>
+    <div className={`border w-full h-screen sm:py-[15%] sm:py-[15%]`}>
       <div
         className={`flex flex-row absolute inset-[10%] 
                   backdrop-blur-xl bg-black/30
                   border-2 border-gray-600 rounded-2xl
                   overflow-hidden`}
       >
-        {
+        {/* {
           responsive?<>
            {
             selectedUser?<>
@@ -42,24 +42,9 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
               </button>
             <Chatbox useritem={itemuser} curr={curr} msglist={msglist} setmsglist={setmsglist} />
           </div>  
-            </>:
-            <>
-          <Sidebar
-          list={array}
-          isonline={isonline}
-          setisonline={setisonline}
-          useritem={itemuser}
-          curr={curr}
-          setid={setitemuser}
-          user={selectedUser}
-          setuser={setselectedUser}
-        />
-            </>
-           }
-          </>
-          :
-          <>
-          <Sidebar
+            </>: */}
+          
+         <Sidebar
           list={array}
           isonline={isonline}
           setisonline={setisonline}
@@ -77,8 +62,6 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
         ) : (
           <Blankchat setuser={setselectedUser} />
         )}
-          </>
-        }
       </div>
     </div>
   );
