@@ -5,11 +5,13 @@ import Rightsider from "../components/Rightsider";
 import Chatbox from "../components/Chatbox";
 import Blankchat from "../components/Blankchat";
 import socket from "../Socket/socket.js";
+ 
 
 const Homepage = ({ array, itemuser, setitemuser, curr }) => {
   const [selectedUser, setselectedUser] = useState(false);
   const [isonline, setisonline] = useState([]);
   const [msglist, setmsglist] = useState([]);
+  const [responsive,setresponsive]=useState(true);
 
   useEffect(() => {
     // 🔹 online users list
@@ -23,14 +25,42 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
   console.log("homepage re rendered " + selectedUser);
 
   return (
-    <div className="border w-full h-screen sm:py-[15%] sm:py-[15%]">
+    <div className={`border w-full h-screen sm:py-[15%] sm:py-[15%] md:${setresponsive(false)}`}>
       <div
         className={`flex flex-row absolute inset-[10%] 
                   backdrop-blur-xl bg-black/30
                   border-2 border-gray-600 rounded-2xl
                   overflow-hidden`}
       >
-        <Sidebar
+        {
+          responsive?<>
+           {
+            selectedUser?<>
+             <div className="flex flex-row flex-1">
+              <button>
+                <img onClick={()=>{setselectedUser(false)}} className="w-[20px]" src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="" />
+              </button>
+            <Chatbox useritem={itemuser} curr={curr} msglist={msglist} setmsglist={setmsglist} />
+          </div>
+
+            </>:
+            <>
+          <Sidebar
+          list={array}
+          isonline={isonline}
+          setisonline={setisonline}
+          useritem={itemuser}
+          curr={curr}
+          setid={setitemuser}
+          user={selectedUser}
+          setuser={setselectedUser}
+        />
+            </>
+           }
+          </>
+          :
+          <>
+          <Sidebar
           list={array}
           isonline={isonline}
           setisonline={setisonline}
@@ -48,6 +78,8 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
         ) : (
           <Blankchat setuser={setselectedUser} />
         )}
+          </>
+        }
       </div>
     </div>
   );
