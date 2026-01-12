@@ -10,7 +10,15 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
   const [selectedUser, setselectedUser] = useState(false);
   const [isonline, setisonline] = useState([]);
   const [msglist, setmsglist] = useState([]);
-  const [responsive, setresponsive] = useState(true);
+  const [responsive, setresponsive] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setresponsive(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     // 🔹 online users list
@@ -30,30 +38,46 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
                   border-2 border-gray-600 rounded-2xl
                   overflow-hidden`}
       >
-       
-         <Sidebar
-          list={array}
-          isonline={isonline}
-          setisonline={setisonline}
-          useritem={itemuser}
-          curr={curr}
-          setid={setitemuser}
-          user={selectedUser}
-          setuser={setselectedUser}
-        />
-     
-        {selectedUser ? (
-          <div className="flex flex-row flex-1">
-            <Chatbox
+        {responsive ? (
+          <div>
+            <Sidebar
+              responsive={responsive}
+              list={array}
+              isonline={isonline}
+              setisonline={setisonline}
               useritem={itemuser}
               curr={curr}
-              msglist={msglist}
-              setmsglist={setmsglist}
+              setid={setitemuser}
+              user={selectedUser}
+              setuser={setselectedUser}
             />
-            <Rightsider useritem={itemuser} msglist={msglist} />
           </div>
         ) : (
-          <Blankchat setuser={setselectedUser} />
+          <div>
+            <Sidebar
+              list={array}
+              isonline={isonline}
+              setisonline={setisonline}
+              useritem={itemuser}
+              curr={curr}
+              setid={setitemuser}
+              user={selectedUser}
+              setuser={setselectedUser}
+            />
+            {selectedUser ? (
+              <div className="flex flex-row flex-1">
+                <Chatbox
+                  useritem={itemuser}
+                  curr={curr}
+                  msglist={msglist}
+                  setmsglist={setmsglist}
+                />
+                <Rightsider useritem={itemuser} msglist={msglist} />
+              </div>
+            ) : (
+              <Blankchat setuser={setselectedUser} />
+            )}
+          </div>
         )}
       </div>
     </div>
