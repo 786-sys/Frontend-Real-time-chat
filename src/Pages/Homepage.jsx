@@ -39,7 +39,7 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
                   overflow-hidden`}
       >
         {responsive ? (
-          <div>
+          <div  className="w-full">
             <Sidebar
               responsive={responsive}
               list={array}
