@@ -30,29 +30,25 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
                   border-2 border-gray-600 rounded-2xl
                   overflow-hidden`}
       >
-        <div className="hidden md:block md:w-[30%]">
-          <Sidebar
-            list={array}
-            isonline={isonline}
-            setisonline={setisonline}
-            useritem={itemuser}
-            curr={curr}
-            setid={setitemuser}
-            user={selectedUser}
-            setuser={setselectedUser}
-          />
-        </div>
+        <Sidebar
+          list={array}
+          isonline={isonline}
+          setisonline={setisonline}
+          useritem={itemuser}
+          curr={curr}
+          setid={setitemuser}
+          user={selectedUser}
+          setuser={setselectedUser}
+        />
         {selectedUser ? (
           <div className="flex flex-row flex-1">
-            <div className="w-full md:w-[70%]">
-              <Chatbox
-                useritem={itemuser}
-                curr={curr}
-                msglist={msglist}
-                setmsglist={setmsglist}
-              />
-              <Rightsider useritem={itemuser} msglist={msglist} />
-            </div>
+            <Chatbox
+              useritem={itemuser}
+              curr={curr}
+              msglist={msglist}
+              setmsglist={setmsglist}
+            />
+            <Rightsider useritem={itemuser} msglist={msglist} />
           </div>
         ) : (
           <Blankchat setuser={setselectedUser} />
