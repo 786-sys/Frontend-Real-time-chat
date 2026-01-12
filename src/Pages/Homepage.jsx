@@ -21,11 +21,22 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
     return () => {
       socket.off("online-users");
     };
-  }, [curr?._id || itemuser?._id]);
+  });
   console.log("homepage re rendered " + selectedUser);
+  useEffect(() => {
+  const handleResize = () => {
+    setresponsive(window.innerWidth < 768);
+  };
+
+  handleResize();
+  window.addEventListener("resize", handleResize);
+
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
 
   return (
-    <div className={`border w-full h-screen sm:py-[15%] sm:py-[15%] md:${setresponsive(false)}`}>
+    <div className={`border w-full h-screen sm:py-[15%] sm:py-[15%]`}>
       <div
         className={`flex flex-row absolute inset-[10%] 
                   backdrop-blur-xl bg-black/30

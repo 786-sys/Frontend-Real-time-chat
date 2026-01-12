@@ -52,8 +52,8 @@ const Loginpage = () => {
         }
       );
       console.log(response);
+      setloading(false);
       if (response.ok) {
-        setloading(false);
         const resp = await response.json();
         alert(
           "you logged in succesfuly " +
