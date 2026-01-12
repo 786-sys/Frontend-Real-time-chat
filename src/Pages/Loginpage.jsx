@@ -71,9 +71,9 @@ const Loginpage = () => {
     }
   };
   return (
-    <div className="min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl">
+    <div className="min-h-screen bg-cover bg-center flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 md:justify-evenly px-4 md:px-0 backdrop-blur-2xl">
       <img
-        className="w-[min(30vw,600px)] rounded-[100px] relative right-[150px]"
+        className="w-[min(30vw,300px)] md:w-[min(30vw,500px)] rounded-[50px] md:rounded-[100px] relative md:right-[150px]"
         src={logo}
         alt="Real Chat Logo"
       />

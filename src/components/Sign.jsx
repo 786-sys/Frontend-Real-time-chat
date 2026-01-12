@@ -19,15 +19,15 @@ const Sign = ({ register,setsigntrue ,fullname,email,password , description}) =>
   }
   return (
     <div 
-      className="border-2 bg-white/8 text-white border-gray-500 p-6 flex flex-col gap-6 rounded-lg shadow-lg"
+      className="border-2 w-full max-w-md bg-white/8 text-white border-gray-500 p-4 md:p-6 flex flex-col gap-4 md:gap-6 rounded-lg shadow-lg"
     >
       {!isdesc  ? <>
-      <h2 className="font-medium text-2xl flex justify-between items-center">
+      <h2 className="font-medium text-xl md:text-2xl flex justify-between items-center">
         Sign up
         {/* {fullname.fullname  +" "+email.email+" "+password.password} */}
       </h2>
         <input
-        className="p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+        className="w-full p-2 md:p-3 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black text-sm md:text-base"
         type="text"
         onChange={(e)=>{fullname.setfullname(e.target.value)}}
         required
@@ -35,7 +35,7 @@ const Sign = ({ register,setsigntrue ,fullname,email,password , description}) =>
         value={fullname.fullname}
       />
       <input
-        className="p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+        className="w-full p-2 md:p-3 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black text-sm md:text-base"
         type="email"
         onChange={(e) => {
           email.setemail(e.target.value);
@@ -45,7 +45,7 @@ const Sign = ({ register,setsigntrue ,fullname,email,password , description}) =>
         value={email.email}
       />
       <input
-        className="p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+        className="w-full p-2 md:p-3 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black text-sm md:text-base"
         type="password"
         onChange={(e) => {
           password.setpassword(e.target.value);
@@ -54,7 +54,7 @@ const Sign = ({ register,setsigntrue ,fullname,email,password , description}) =>
         placeholder="password"
         value={password.password}
       />
-      <button onClick={(e)=>{dekhozara(e)}} className="py-3 bg-gradient-to-r from-purple-400 to-violet-600 text-white rounded-md cursor-pointer">
+      <button onClick={(e)=>{dekhozara(e)}} className="py-2 md:py-3 bg-gradient-to-r from-purple-400 to-violet-600 text-white rounded-md cursor-pointer text-sm md:text-base hover:opacity-90">
         Create Accoutnt 
       </button>
       </>
@@ -71,18 +71,18 @@ const Sign = ({ register,setsigntrue ,fullname,email,password , description}) =>
       </>
       }
      
-      <div className="flex items-center gap-2 text-sm text-gray-500">
+      <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500">
         <input type="checkbox" required />
         <p>Agree to terms and condition apply</p>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-gray-600">
+        <p className="text-xs md:text-sm text-gray-600">
           Already have an account
           <span
             onClick={() => {
               setsigntrue(false);
             }}
-            className="font-medium text-white cursor-pointer m-2"
+            className="font-medium text-white cursor-pointer m-2 hover:opacity-80"
           >
             Login here
           </span>

@@ -67,9 +67,9 @@ const Sidebar = ({
   return (
     <div className="p-5 h-full flex flex-col">
       {/* Header */}
-      <div className="py-5 px-3">
+      <div className="py-5 px-3 relative">
         <div>
-          <div className="flex flex-row text-white justify-between">
+          <div className="flex flex-row text-white justify-between items-center">
             <div className="flex flex-row gap-2">
               <img
                 src={logo}
@@ -84,10 +84,10 @@ const Sidebar = ({
                 setIsOpen(!isOpen);
               }}
               alt="menu"
-              className="h-[20px] rounded-[30px] cursor-pointer"
+              className="h-[20px] rounded-[30px] cursor-pointer hover:opacity-80"
             />
             {isOpen && (
-              <div className="absolute right-[950px] top-12 bg-black text-white border border-gray-600 rounded-lg shadow-lg w-40">
+              <div className="absolute right-0 md:right-auto md:left-0 top-12 bg-black text-white border border-gray-600 rounded-lg shadow-lg w-40 z-50">
                 <div
                   onClick={() => {
                     navigate("/profile");
