@@ -52,7 +52,7 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
               setuser={setselectedUser}
             />
           {selectedUser ? (
-              <div className="flex flex-row flex-1">
+              <div className={`flex flex-row flex-1 ${responsive && "hidden"}`}>
                 <Chatbox
                   responsive={responsive}
                   useritem={itemuser}
@@ -66,8 +66,6 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
               <Blankchat responsive={responsive} setuser={setselectedUser} />
             )}
           </div>
-
-          
         ) : (
           <div>
             <Sidebar
