@@ -30,7 +30,7 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
                   border-2 border-gray-600 rounded-2xl
                   overflow-hidden`}
       >
-       <div className="hidden md:w-[30%] md:block">
+       <div className="">
          <Sidebar
           list={array}
           isonline={isonline}
