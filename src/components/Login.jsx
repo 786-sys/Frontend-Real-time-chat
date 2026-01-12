@@ -1,13 +1,16 @@
+import { set } from "mongoose";
 import React, { useState } from "react";
 
-const Login = ({ Log, setsigntrue, email, password }) => {
+const Login = ({ Log,loading,setloading, setsigntrue, email, password }) => {
   const [isField, setisField] = useState(true);
+
   const checkfield = () => {
     
     if (email.email.trim() === "" || password.password.trim() === "") {
       setisField(false);
       return;
     }
+    setloading(true);
     console.log(email.email +" "+password.password)
      Log();
   };
@@ -45,7 +48,7 @@ const Login = ({ Log, setsigntrue, email, password }) => {
           onClick={()=>{checkfield()}}
           className="py-3 bg-gradient-to-r from-purple-400 to-violet-600 text-white rounded-md cursor-pointer"
         >
-          login
+          {loading?<p>Logging in...</p>:<p>Login </p>}
         </button>
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <input type="checkbox" required />

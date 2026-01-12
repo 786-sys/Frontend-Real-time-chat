@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import Sign from "../components/Sign.jsx";
 import Login from "../components/Login.jsx";
 import { useNavigate } from "react-router-dom";
-
+import logo from "../assets/logo.png";
 
 const Loginpage = () => {
   const [signtrue, setsigntrue] = useState(true);
   const navigate = useNavigate();
+  const [loading, setloading] = useState(false);
   const [fullname, setfullname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
@@ -52,6 +53,7 @@ const Loginpage = () => {
       );
       console.log(response);
       if (response.ok) {
+        setloading(false);
         const resp = await response.json();
         alert(
           "you logged in succesfuly " +
@@ -72,8 +74,8 @@ const Loginpage = () => {
     <div className="min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl">
       <img
         className="w-[min(30vw,600px)] rounded-[100px] relative right-[150px]"
-        src="./src/assets/logo.png"
-        alt=""
+        src={logo}
+        alt="Real Chat Logo"
       />
       {signtrue ? (
         <Sign
@@ -87,6 +89,8 @@ const Loginpage = () => {
       ) : (
         <Login
           Log={Log}
+          loading={loading}
+          setloading={setloading}
           setsigntrue={setsigntrue}
           email={{ email, setemail }}
           password={{ password, setpassword }}
