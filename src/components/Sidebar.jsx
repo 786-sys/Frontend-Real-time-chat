@@ -65,7 +65,7 @@ const Sidebar = ({
     item.fullname.toLowerCase().includes(searchperson.toLowerCase())
   );
   return (
-    <div className="p-5 w-[30%] h-full flex flex-col">
+    <div className="p-5 h-full flex flex-col">
       {/* Header */}
       <div className="py-5 px-3">
         <div>
