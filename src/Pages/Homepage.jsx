@@ -13,7 +13,7 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
   const [responsive, setresponsive] = useState(false);
   useEffect(() => {
     const handleResize = () => {
-      setresponsive(window.innerWidth < 868);
+      setresponsive(window.innerWidth < 1068);
     };
 
     window.addEventListener("resize", handleResize);
