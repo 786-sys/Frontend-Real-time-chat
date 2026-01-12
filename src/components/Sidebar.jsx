@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import socket from "../Socket/socket.js";
+import dots from "../assets/dots.jpg";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const Sidebar = ({
@@ -78,8 +79,7 @@ const Sidebar = ({
               />
             </div>
             <img
-              src="./src/assets/dots.jpg"
-
+              src={dots}
               onMouseOver={() => {
                 setIsOpen(!isOpen);
               }}
