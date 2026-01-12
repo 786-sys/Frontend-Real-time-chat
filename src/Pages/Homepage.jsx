@@ -10,63 +10,77 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
   const [selectedUser, setselectedUser] = useState(false);
   const [isonline, setisonline] = useState([]);
   const [msglist, setmsglist] = useState([]);
-  const [responsive, setresponsive] = useState(window.innerWidth < 768);
+  const [responsive, setresponsive] = useState(true);
 
   useEffect(() => {
+    // 🔹 online users list
     socket.on("online-users", (users) => {
       setisonline(users);
     });
     return () => {
       socket.off("online-users");
     };
-  }, []);
-
+  },[]);
+  console.log("homepage re rendered " + selectedUser);
   useEffect(() => {
     const handleResize = () => {
       setresponsive(window.innerWidth < 768);
     };
 
+    handleResize();
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <div className="border w-full h-screen sm:py-[15%]">
+    <div className={`border w-full h-screen sm:py-[15%] sm:py-[15%]`}>
       <div
         className={`flex flex-row absolute inset-[10%] 
-        backdrop-blur-xl bg-black/30
-        border-2 border-gray-600 rounded-2xl
-        overflow-hidden`}
+                  backdrop-blur-xl bg-black/30
+                  border-2 border-gray-600 rounded-2xl
+                  overflow-hidden`}
       >
         {responsive ? (
           <>
             {selectedUser ? (
-              <div className="flex flex-row flex-1">
-                <button onClick={() => setselectedUser(false)}>
-                  ←
-                </button>
-                <Chatbox
+              <>
+                <div className="flex flex-row flex-1">
+                  <button>
+                    <img
+                      onClick={() => {
+                        setselectedUser(false);
+                      }}
+                      className="w-[20px]"
+                      src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png"
+                      alt=""
+                    />
+                  </button>
+                  <Chatbox
+                    useritem={itemuser}
+                    curr={curr}
+                    msglist={msglist}
+                    setmsglist={setmsglist}
+                  />
+                </div>
+              </>
+            ) : (
+              <div>
+                <Sidebar
+                  list={array}
+                  isonline={isonline}
+                  setisonline={setisonline}
                   useritem={itemuser}
                   curr={curr}
-                  msglist={msglist}
-                  setmsglist={setmsglist}
+                  setid={setitemuser}
+                  user={selectedUser}
+                  setuser={setselectedUser}
                 />
               </div>
-            ) : (
-              <Sidebar
-                list={array}
-                isonline={isonline}
-                setisonline={setisonline}
-                useritem={itemuser}
-                curr={curr}
-                setid={setitemuser}
-                user={selectedUser}
-                setuser={setselectedUser}
-              />
             )}
           </>
         ) : (
-          <>
+          <div className="w-[30%]">
             <Sidebar
               list={array}
               isonline={isonline}
@@ -77,7 +91,6 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
               user={selectedUser}
               setuser={setselectedUser}
             />
-
             {selectedUser ? (
               <div className="flex flex-row flex-1">
                 <Chatbox
@@ -91,7 +104,7 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
             ) : (
               <Blankchat setuser={setselectedUser} />
             )}
-          </>
+          </div>
         )}
       </div>
     </div>
