@@ -5,6 +5,7 @@ import dots from "../assets/dots.jpg";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const Sidebar = ({
+  responsive,
   list,
   isonline,
   setisonline,
@@ -65,7 +66,7 @@ const Sidebar = ({
     item.fullname.toLowerCase().includes(searchperson.toLowerCase())
   );
   return (
-    <div className="p-5 w-[30%] h-full flex flex-col">
+    <div className={`p-5 h-full flex flex-col ${! responsive? "w-[30%]":"w-full" } `}>
       {/* Header */}
       <div className="py-5 px-3">
         <div>
