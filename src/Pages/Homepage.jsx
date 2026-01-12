@@ -30,53 +30,28 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
                   border-2 border-gray-600 rounded-2xl
                   overflow-hidden`}
       >
-        
-    <div className="w-full md:w-[30%]">
-          <Sidebar
-            list={array}
-            isonline={isonline}
-            setisonline={setisonline}
-            useritem={itemuser}
-            curr={curr}
-            setid={setitemuser}
-            user={selectedUser}
-            setuser={setselectedUser}
-          />
-        </div>
-
-        {/* Chat + Right panel */}
+        <Sidebar
+          list={array}
+          isonline={isonline}
+          setisonline={setisonline}
+          useritem={itemuser}
+          curr={curr}
+          setid={setitemuser}
+          user={selectedUser}
+          setuser={setselectedUser}
+        />
         {selectedUser ? (
-          <div className="flex flex-col md:flex-row flex-1">
-            {/* Mobile Back Button */}
-            <div className="flex items-center p-2 md:hidden">
-              <button
-                onClick={() => setselectedUser(false)}
-                className="px-3 py-1 rounded bg-gray-700 text-white"
-              >
-                ← Back
-              </button>
-            </div>
-
-            {/* Chatbox */}
-            <div className="w-full">
-              <Chatbox
-                useritem={itemuser}
-                curr={curr}
-                msglist={msglist}
-                setmsglist={setmsglist}
-              />
-            </div>
-
-            {/* Rightsider (desktop only) */}
-            <div className="hidden md:block md:w-[25%]">
-              <Rightsider useritem={itemuser} msglist={msglist} />
-            </div>
+          <div className="flex flex-row flex-1">
+            <Chatbox
+              useritem={itemuser}
+              curr={curr}
+              msglist={msglist}
+              setmsglist={setmsglist}
+            />
+            <Rightsider useritem={itemuser} msglist={msglist} />
           </div>
         ) : (
-          /* Blankchat (desktop only) */
-          <div className="hidden md:flex flex-1">
-            <Blankchat setuser={setselectedUser} />
-          </div>
+          <Blankchat setuser={setselectedUser} />
         )}
       </div>
     </div>
