@@ -23,10 +23,9 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
   }, [curr?._id || itemuser?._id]);
   console.log("homepage re rendered " + selectedUser);
   return (
-    <div className={`border w-full h-screen flex flex-col md:py-[5%] lg:py-[8%] px-2 md:px-4`}>
+    <div className={`border w-full h-screen sm:py-[15%] sm:py-[15%]`}>
       <div
-        className={`flex flex-col md:flex-row flex-1
-                  md:absolute md:inset-[5%] lg:inset-[8%]
+        className={`flex flex-row absolute inset-[10%] 
                   backdrop-blur-xl bg-black/30
                   border-2 border-gray-600 rounded-2xl
                   overflow-hidden`}
