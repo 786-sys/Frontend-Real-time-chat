@@ -5,7 +5,6 @@ import dots from "../assets/dots.jpg";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const Sidebar = ({
-  responsive,
   list,
   isonline,
   setisonline,
@@ -66,7 +65,7 @@ const Sidebar = ({
     item.fullname.toLowerCase().includes(searchperson.toLowerCase())
   );
   return (
-    <div className={`p-5 h-full flex flex-col ${! responsive? "w-[30%]":"w-full" } `}>
+    <div className={`p-5 h-full flex flex-col`}>
       {/* Header */}
       <div className="py-5 px-3">
         <div>
@@ -88,7 +87,7 @@ const Sidebar = ({
               className="h-[20px] rounded-[30px] cursor-pointer"
             />
             {isOpen && (
-              <div className="absolute right-[950px] top-12 bg-black text-white border border-gray-600 rounded-lg shadow-lg w-40">
+              <div className="absolute left-[150px] top-12 bg-black text-white border border-gray-600 rounded-lg shadow-lg w-40">
                 <div
                   onClick={() => {
                     navigate("/profile");

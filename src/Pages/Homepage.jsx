@@ -18,7 +18,7 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  });
 
   useEffect(() => {
     // 🔹 online users list
@@ -38,37 +38,64 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
                   border-2 border-gray-600 rounded-2xl
                   overflow-hidden`}
       >
-        {responsive ? (
-          <div  className="w-full">
-            <Sidebar
+       <div className={`w-[30%] ${responsive && selectedUser && "hidden"} ${responsive && !selectedUser && "w-[100%]"}`}>
+               <Sidebar
+                list={array}
+                isonline={isonline}
+                setisonline={setisonline}
+                useritem={itemuser}
+                curr={curr}
+                setid={setitemuser}
+                user={selectedUser}
+                setuser={setselectedUser}
+              />
+             </div>
+        {selectedUser ? (
+          <div
+            className={`flex flex-row flex-1 ${
+              responsive && selectedUser && "visible"
+            }`}
+          >
+            <Chatbox
               responsive={responsive}
-              list={array}
-              isonline={isonline}
-              setisonline={setisonline}
+              setselectedUser={setselectedUser}
               useritem={itemuser}
               curr={curr}
-              setid={setitemuser}
-              user={selectedUser}
-              setuser={setselectedUser}
+              msglist={msglist}
+              setmsglist={setmsglist}
             />
-          {selectedUser ? (
-              <div className={`flex flex-row flex-1 ${responsive && "hidden"}`}>
-                <Chatbox
-                  responsive={responsive}
-                  useritem={itemuser}
-                  curr={curr}
-                  msglist={msglist}
-                  setmsglist={setmsglist}
-                />
-                <Rightsider responsive={responsive} useritem={itemuser} msglist={msglist} />
-              </div>
-            ) : (
-              <Blankchat responsive={responsive} setuser={setselectedUser} />
-            )}
+            <Rightsider
+              responsive={responsive}
+              useritem={itemuser}
+              msglist={msglist}
+            />
           </div>
         ) : (
-          <div>
-            <Sidebar
+          <div className={`w-full h-full ${responsive && "hidden"}`}>
+            <Blankchat setuser={setselectedUser} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Homepage;
+{
+  /* {
+          responsive?<>
+           {
+            selectedUser?<>
+             <div className="flex flex-row flex-1">
+              <button>
+                <img onClick={()=>{setselectedUser(false)}} className="w-[20px]" src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="" />
+              </button>
+            <Chatbox useritem={itemuser} curr={curr} msglist={msglist} setmsglist={setmsglist} />
+          </div>  
+            </>: */
+}
+{
+  /* <Sidebar
               responsive={responsive}
               list={array}
               isonline={isonline}
@@ -92,25 +119,5 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
               </div>
             ) : (
               <Blankchat responsive={responsive} setuser={setselectedUser} />
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default Homepage;
-{
-  /* {
-          responsive?<>
-           {
-            selectedUser?<>
-             <div className="flex flex-row flex-1">
-              <button>
-                <img onClick={()=>{setselectedUser(false)}} className="w-[20px]" src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="" />
-              </button>
-            <Chatbox useritem={itemuser} curr={curr} msglist={msglist} setmsglist={setmsglist} />
-          </div>  
-            </>: */
+            )} */
 }

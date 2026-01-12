@@ -1,6 +1,6 @@
 import React, { use, useEffect, useState } from "react";
 import socket from "../Socket/socket.js";
-const Chatbox = ({responsive, useritem, curr, msglist, setmsglist}) => {
+const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglist}) => {
   const [msg, setmsg] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -144,10 +144,10 @@ const Chatbox = ({responsive, useritem, curr, msglist, setmsglist}) => {
     }, 10000);
   };1 
   return (
-    <div className="h-full relative backdrop-blur-lg w-[100%] ">
+    <div className={`h-full relative backdrop-blur-lg w-[100%] `}>
       {/* Header */}
-      <div className={`${!responsive && "w-[20px]"}`}>
-          <button>
+      <div className={`${!responsive ? "hidden":"w-[20px]"}`}>
+          <button onClick={()=>{setselectedUser(false)}}>
             <img src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="" />
           </button>
       </div>
@@ -219,8 +219,9 @@ const Chatbox = ({responsive, useritem, curr, msglist, setmsglist}) => {
         )}
       </div>
       {/* Input bar */}
-      <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3">
-        <div className="flex-1 flex items-center bg-gray-100/12 px-3 rounded-full">
+      <div className="flex flex-wrap absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3">
+        <div className="flex flex-wrap  md:flex-1 flex items-center bg-gray-100/12 px-3 rounded-full">
+        
           <input
             className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-black placeholder-gray-400"
             placeholder="Send the Message"
