@@ -146,7 +146,7 @@ const Chatbox = ({responsive, useritem, curr, msglist, setmsglist}) => {
   return (
     <div className="h-full relative backdrop-blur-lg w-[100%] ">
       {/* Header */}
-      <div className={`${!responsive ? "hidden":"w-[20px]"}`}>
+      <div className={`${!responsive && "w-[20px]"}`}>
           <button>
             <img src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="" />
           </button>
