@@ -55,6 +55,7 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
         ) : (
           <div>
             <Sidebar
+              responsive={responsive}
               list={array}
               isonline={isonline}
               setisonline={setisonline}
