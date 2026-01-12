@@ -51,7 +51,22 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
               user={selectedUser}
               setuser={setselectedUser}
             />
+          {selectedUser ? (
+              <div className="flex flex-row flex-1">
+                <Chatbox
+                  useritem={itemuser}
+                  curr={curr}
+                  msglist={msglist}
+                  setmsglist={setmsglist}
+                />
+                <Rightsider useritem={itemuser} msglist={msglist} />
+              </div>
+            ) : (
+              <Blankchat setuser={setselectedUser} />
+            )}
           </div>
+
+          
         ) : (
           <div>
             <Sidebar
