@@ -54,15 +54,16 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
           {selectedUser ? (
               <div className="flex flex-row flex-1">
                 <Chatbox
+                  responsive={responsive}
                   useritem={itemuser}
                   curr={curr}
                   msglist={msglist}
                   setmsglist={setmsglist}
                 />
-                <Rightsider useritem={itemuser} msglist={msglist} />
+                <Rightsider responsive={responsive} useritem={itemuser} msglist={msglist} />
               </div>
             ) : (
-              <Blankchat setuser={setselectedUser} />
+              <Blankchat responsive={responsive} setuser={setselectedUser} />
             )}
           </div>
 
@@ -83,15 +84,16 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
             {selectedUser ? (
               <div className="flex flex-row flex-1">
                 <Chatbox
+                responsive={responsive}
                   useritem={itemuser}
                   curr={curr}
                   msglist={msglist}
                   setmsglist={setmsglist}
                 />
-                <Rightsider useritem={itemuser} msglist={msglist} />
+                <Rightsider responsive={responsive} useritem={itemuser} msglist={msglist} />
               </div>
             ) : (
-              <Blankchat setuser={setselectedUser} />
+              <Blankchat responsive={responsive} setuser={setselectedUser} />
             )}
           </div>
         )}

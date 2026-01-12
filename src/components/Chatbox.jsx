@@ -1,6 +1,6 @@
 import React, { use, useEffect, useState } from "react";
 import socket from "../Socket/socket.js";
-const Chatbox = ({ useritem, curr, msglist, setmsglist}) => {
+const Chatbox = ({responsive, useritem, curr, msglist, setmsglist}) => {
   const [msg, setmsg] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -146,6 +146,11 @@ const Chatbox = ({ useritem, curr, msglist, setmsglist}) => {
   return (
     <div className="h-full relative backdrop-blur-lg w-[100%] ">
       {/* Header */}
+      <div className={`${!responsive ? "hidden":"w-[20px]"}`}>
+          <button>
+            <img src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="" />
+          </button>
+      </div>
       <div className="flex justify-between items-center gap-3 py-3 mx-4 border-b border-stone-500 ">
         <div className="flex items-center gap-3">
           <img
