@@ -75,7 +75,6 @@ const Sidebar = ({
                 src={logo}
                 alt="logo"
                 className="h-[35px]"
-
               />
             </div>
             <img
@@ -87,7 +86,7 @@ const Sidebar = ({
               className="h-[20px] rounded-[30px] cursor-pointer"
             />
             {isOpen && (
-              <div className="absolute left-[150px] top-12 bg-black text-white border border-gray-600 rounded-lg shadow-lg w-40">
+              <div className="absolute left-[150px] top-14 bg-black text-white border border-gray-600 rounded-lg shadow-lg w-40">
                 <div
                   onClick={() => {
                     navigate("/profile");
@@ -179,7 +178,6 @@ const Sidebar = ({
                 return (
                   <div
                     onClick={() => {
-
                       setuser(true);
                       setid(item);
                     }}

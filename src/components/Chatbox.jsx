@@ -144,7 +144,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
     }, 10000);
   };1 
   return (
-    <div className={`h-full relative backdrop-blur-lg w-[100%] `}>
+    <div className={`h-full relative backdrop-blur-lg w-[100%]`}>
       {/* Header */}
       <div className={`${!responsive ? "hidden":"w-[20px]"}`}>
           <button onClick={()=>{setselectedUser(false)}}>
@@ -219,11 +219,11 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
         )}
       </div>
       {/* Input bar */}
-      <div className="flex flex-wrap absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3">
-        <div className="flex flex-wrap  md:flex-1 flex items-center bg-gray-100/12 px-3 rounded-full">
+      <div className="flex flex-wrap fixed bottom-0 flex justify-between items-center gap-3 p-3 w-full mt-[20px] backdrop-blur-[40px] max-sm:bg-black/90">
+        <div className="flex flex-wrap flex-1 md:flex-1 flex justify-between items-center bg-gray-100/12 px-3 rounded-full ">
         
           <input
-            className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-black placeholder-gray-400"
+            className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-black placeholder-gray-400 "
             placeholder="Send the Message"
             type="text"
             value={msg}
@@ -248,11 +248,13 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
           </label>
         </div>
 
-        <img
+     <div>
+         <img className="h-[40px]"
           src="data:image/svg+xml,%3csvg%20width='46'%20height='46'%20viewBox='0%200%2046%2046'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3ccircle%20cx='23'%20cy='23'%20r='23'%20fill='url(%23paint0_linear_8506_1288)'/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M18.3739%2027.7131C19.222%2029.2715%2021.9243%2034.2198%2021.9243%2034.2198C21.9243%2034.2198%2031.9224%2014.8584%2032.0811%2014.541L32.0938%2014.4839L18.3739%2027.7131ZM11.7676%2023.4282C11.7676%2023.4282%2016.4003%2026.2093%2017.6997%2026.9812L31.4463%2013.9062C29.8822%2014.6642%2011.7676%2023.4282%2011.7676%2023.4282Z'%20fill='white'/%3e%3cdefs%3e%3clinearGradient%20id='paint0_linear_8506_1288'%20x1='23'%20y1='0'%20x2='23'%20y2='46'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%23C263FE'/%3e%3cstop%20offset='1'%20stop-color='%237D36FE'/%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e"
           alt="send"
           onClick={handleSend}
         />
+     </div>
       </div>
     </div>
   );

@@ -117,9 +117,9 @@ const Profilepage = () => {
               }}
             />
             {console.log("this is my just bedore kjdjkj  " + Url || "not have")}
-            <img
+            <img ca
               src={Url}
-              className="max-w-[110px] rounded-lg object-cover shadow"
+              className="max-w-[110px] max-sm:max-h-[100px] max-sm:max-w-[100px]  rounded-lg object-cover shadow"
               alt=""
             />
             Upload user Profile

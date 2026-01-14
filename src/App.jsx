@@ -24,6 +24,15 @@ function App() {
   const [array, setarray] = useState([]);
   const [itemuser, setitemuser] = useState(null);
   const [curr, setcurr] = useState(null);
+  const [responsive,setresponsive]=useState(false);
+   useEffect(() => {
+      const handleResize = () => {
+        setresponsive(window.innerWidth < 1068);
+      };
+  
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    });
  
   const Display = async () => {
     try {
@@ -85,6 +94,7 @@ function App() {
             path="/Homepage"
             element={
               <Homepage
+                responsive={responsive}
                 array={array}
                 itemuser={itemuser}
                 setitemuser={setitemuser}

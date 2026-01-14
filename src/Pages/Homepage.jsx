@@ -6,19 +6,10 @@ import Chatbox from "../components/Chatbox";
 import Blankchat from "../components/Blankchat";
 import socket from "../Socket/socket.js";
 
-const Homepage = ({ array, itemuser, setitemuser, curr }) => {
+const Homepage = ({responsive, array, itemuser, setitemuser, curr }) => {
   const [selectedUser, setselectedUser] = useState(false);
   const [isonline, setisonline] = useState([]);
   const [msglist, setmsglist] = useState([]);
-  const [responsive, setresponsive] = useState(false);
-  useEffect(() => {
-    const handleResize = () => {
-      setresponsive(window.innerWidth < 1068);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  });
 
   useEffect(() => {
     // 🔹 online users list
@@ -38,18 +29,22 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
                   border-2 border-gray-600 rounded-2xl
                   overflow-hidden`}
       >
-       <div className={`w-[30%] ${responsive && selectedUser && "hidden"} ${responsive && !selectedUser && "w-[100%]"}`}>
-               <Sidebar
-                list={array}
-                isonline={isonline}
-                setisonline={setisonline}
-                useritem={itemuser}
-                curr={curr}
-                setid={setitemuser}
-                user={selectedUser}
-                setuser={setselectedUser}
-              />
-             </div>
+        <div
+          className={`${
+            responsive && !selectedUser && "w-[100%]"
+          } ${responsive && selectedUser && "hidden"} md:w-[30%] max-sm:w-[100%]`}
+        >
+          <Sidebar
+            list={array}
+            isonline={isonline}
+            setisonline={setisonline}
+            useritem={itemuser}
+            curr={curr}
+            setid={setitemuser}
+            user={selectedUser}
+            setuser={setselectedUser}
+          />
+        </div>
         {selectedUser ? (
           <div
             className={`flex flex-row flex-1 ${
@@ -71,9 +66,17 @@ const Homepage = ({ array, itemuser, setitemuser, curr }) => {
             />
           </div>
         ) : (
-          <div className={`w-full h-full ${responsive && "hidden"}`}>
-            <Blankchat setuser={setselectedUser} />
-          </div>
+          <>
+            {/* {!selectedUser && !responsive && (
+              <div className={`w-full h-full`}>
+                <Blankchat setuser={setselectedUser} />
+              </div>
+            )} */}
+              <div className={`w-full h-full ${responsive && "hidden"}`}>
+                <Blankchat className={`sm:hidden`} setuser={setselectedUser} />
+              </div>
+       
+          </>
         )}
       </div>
     </div>

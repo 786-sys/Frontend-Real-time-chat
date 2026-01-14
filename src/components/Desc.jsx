@@ -9,7 +9,6 @@ const Desc = ({description,register,isdesc,setisdesc}) => {
         register();
     }
   return (
-   
     <div>
       <div className='flex justify-end items-center cursor-pointer mb-4' onClick={()=>{setisdesc(false)}}> 
         <img className='w-[20px]' src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="Arrow prevoius" />

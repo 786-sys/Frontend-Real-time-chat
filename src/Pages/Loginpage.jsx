@@ -71,12 +71,14 @@ const Loginpage = () => {
     }
   };
   return (
-    <div className="min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl">
-      <img
-        className="w-[min(30vw,600px)] rounded-[100px] relative right-[150px]"
+    <div className="min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl md:flex-row">
+     <div className="flex">
+         <img
+        className="w-[min(50vw,600px)] rounded-[100px]"
         src={logo}
         alt="Real Chat Logo"
       />
+     </div>
       {signtrue ? (
         <Sign
           register={Register}
@@ -96,6 +98,7 @@ const Loginpage = () => {
           password={{ password, setpassword }}
         />
       )}
+      
     </div>
   );
 };
