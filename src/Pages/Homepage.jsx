@@ -72,8 +72,8 @@ const Homepage = ({responsive, array, itemuser, setitemuser, curr }) => {
                 <Blankchat setuser={setselectedUser} />
               </div>
             )} */}
-              <div className={`w-full h-full ${responsive && "hidden"}`}>
-                <Blankchat className={`sm:hidden`} setuser={setselectedUser} />
+              <div className={`max-sm:hidden w-full h-full`}>
+                <Blankchat setuser={setselectedUser} />
               </div>
        
           </>

@@ -146,11 +146,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
   return (
     <div className={`h-full relative backdrop-blur-lg w-[100%]`}>
       {/* Header */}
-      <div className={`${!responsive ? "hidden":"w-[20px]"}`}>
-          <button onClick={()=>{setselectedUser(false)}}>
-            <img src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="" />
-          </button>
-      </div>
+ 
       <div className="flex justify-between items-center gap-3 py-3 mx-4 border-b border-stone-500 ">
         <div className="flex items-center gap-3">
           <img
@@ -163,10 +159,15 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
             {isonline.includes(useritem._id) ? <b>Online</b> : <b>Offline</b>}
           </p>
         </div>
+             <div className={`${!responsive ? "hidden":"w-[20px]"}`}>
+          <button onClick={()=>{setselectedUser(false)}}>
+            <img src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="" />
+          </button>
+      </div>
       </div>
 
       {/* Chat content */}
-      <div className="flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6">
+      <div className="flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 max-sm:pb-[120px]">
         {msglist ? (
           msglist.map((item, index) => {
             const isMe = item.senderId === curr._id;
@@ -218,7 +219,9 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
           </div>
         )}
       </div>
+
       {/* Input bar */}
+
       <div className="flex flex-wrap fixed bottom-0 flex justify-between items-center gap-3 p-3 w-full mt-[20px] backdrop-blur-[40px] max-sm:bg-black/90">
         <div className="flex flex-wrap flex-1 md:flex-1 flex justify-between items-center bg-gray-100/12 px-3 rounded-full ">
         
@@ -256,6 +259,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
         />
      </div>
       </div>
+
     </div>
   );
 };
