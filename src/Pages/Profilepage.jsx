@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.jpg"
 
 const Profilepage = () => {
   const [Name, setName] = useState("");
   const [textarea, settextarea] = useState("");
-  const [Url, setUrl] = useState("/src/assets/logo.jpg");
+  const [Url, setUrl] = useState(logo);
   let [file, setfile] = useState(null);
   const navigate = useNavigate();
   // const [registeruser,setregisteruser]=useState(null);

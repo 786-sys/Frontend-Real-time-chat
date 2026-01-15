@@ -214,7 +214,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
           </p>
         )}
         {isTypingUser === useritem._id && (
-          <div className="text-xs text-green-400 italic text-[40px] h-[50px] ">
+          <div className="text-xs text-green-400 italic text-[40px] h-[50px] max-sm:text-[20px]">
             typing...
           </div>
         )}
