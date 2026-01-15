@@ -30,10 +30,9 @@ const Homepage = ({responsive, array, itemuser, setitemuser, curr }) => {
                   overflow-hidden`}
       >
         <div
-          className={`${
-            responsive && !selectedUser && "w-[100%]"
-          } ${responsive && selectedUser && "hidden"} md:w-[30%] max-sm:w-[100%]`}
+          className={`md:w-[30%] max-sm:${selectedUser && 'hidden'}  max-sm:w-[100%]`}
         >
+
           <Sidebar
             list={array}
             isonline={isonline}
@@ -48,7 +47,7 @@ const Homepage = ({responsive, array, itemuser, setitemuser, curr }) => {
         {selectedUser ? (
           <div
             className={`flex flex-row flex-1 ${
-              responsive && selectedUser && "visible"
+              responsive && selectedUser && "visible" && "w-[100%]"
             }`}
           >
             <Chatbox

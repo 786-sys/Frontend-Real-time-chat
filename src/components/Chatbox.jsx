@@ -159,7 +159,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
             {isonline.includes(useritem._id) ? <b>Online</b> : <b>Offline</b>}
           </p>
         </div>
-             <div className={`${!responsive ? "hidden":"w-[20px]"}`}>
+             <div className={`w-[20px] md:hidden`}>
           <button onClick={()=>{setselectedUser(false)}}>
             <img src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="" />
           </button>
