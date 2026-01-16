@@ -1,4 +1,6 @@
 User-agent: *
-Allow: /
+Disallow: /Homepage
+Disallow: /profile
+Disallow: /api/
 
 Sitemap: https://frontend-real-time-chat.onrender.com/sitemap.xml
