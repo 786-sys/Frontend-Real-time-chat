@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
+import logi from "../assets/logo.jpg"
 import socket from "../Socket/socket.js";
 import dots from "../assets/dots.jpg";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -143,7 +144,7 @@ const Sidebar = ({
                   >
                     <img
                       className="w-[35px] aspect-[1/1] rounded-full"
-                      src={item?.avatar || "/src/assets/logo.jpg"}
+                      src={item?.avatar || logi}
                       alt=""
                     />
 
@@ -187,7 +188,7 @@ const Sidebar = ({
                   >
                     <img
                       className="w-[35px] aspect-[1/1] rounded-full"
-                      src={item?.avatar || "/src/assets/logo.jpg"}
+                      src={item?.avatar || logi}
                       alt=""
                     />
                     <div>
