@@ -1,4 +1,5 @@
 import React, { use, useEffect, useState } from "react";
+import logo from "../assets/logo.jpg"
 import socket from "../Socket/socket.js";
 const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglist}) => {
   const [msg, setmsg] = useState("");
@@ -150,7 +151,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
       <div className="flex justify-between items-center gap-3 py-3 mx-4 border-b border-stone-500 ">
         <div className="flex items-center gap-3">
           <img
-            src={useritem.avatar}
+            src={useritem?.avatar || logo}
             alt="User Avatar"
             className="w-10 h-10 rounded-full"
           />
