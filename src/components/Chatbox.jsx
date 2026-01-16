@@ -151,7 +151,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
       <div className="flex justify-between items-center gap-3 py-3 mx-4 border-b border-stone-500 ">
         <div className="flex items-center gap-3">
           <img
-            src={useritem?.avatar || logo}
+            src={useritem?.avatar !== "" ? logo : useritem.avatar}
             alt="User Avatar"
             className="w-10 h-10 rounded-full"
           />
