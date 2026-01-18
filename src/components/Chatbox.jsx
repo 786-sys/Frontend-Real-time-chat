@@ -144,6 +144,12 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
       });
     }, 10000);
   };1 
+  const enterkrwalo=(e)=>{
+     if (e.key === "Enter") {
+    e.preventDefault();
+    handleSend();
+  }
+  }
   return (
     <div className={`h-full relative backdrop-blur-lg w-[100%]`}>
       {/* Header */}
@@ -234,6 +240,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
             onChange={(e) => {
               ONCHNAGE(e);
             }}
+            onKeyDown={(e)=>{enterkrwalo(e)}}
           />
 
           <label htmlFor="image">

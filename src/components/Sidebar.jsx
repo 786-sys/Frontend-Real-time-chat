@@ -70,7 +70,7 @@ const Sidebar = ({
       {/* Header */}
       <div className="py-5 px-3">
         <div>
-          <div className="flex flex-row text-white justify-between">
+          <div className="flex flex-row text-white justify-between p-[10px]  max-sm:p-[20px]">
             <div className="flex flex-row gap-2">
               <img
                 src={logo}
@@ -110,10 +110,10 @@ const Sidebar = ({
             )}
           </div>
         </div>
-        <div>
+        <div className="border border-white-200 rounded-xl">
           <input
             value={searchperson}
-            className="bg-transparent border-none outline-none text-white text-xs placeholder-[#c8c8c8] flex-1"
+            className="bg-transparent border-none outline-none text-white text-xs placeholder-[#c8c8c8] flex-1 m-[5px] max-sm:mt-[7px]"
             type="text"
             placeholder="Search"
             onChange={(e) => {
