@@ -1,7 +1,35 @@
 import React, { use } from 'react'
 
 
+
 const Rightsider = ({responsive,useritem, msglist}) => {
+  const LOGOUT = async () => {
+    const isConfirmed = confirm("Are you sure you want to continue?");
+
+    if (isConfirmed) {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/logout`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          }
+        );
+        if (response.ok) {
+          const resp = await response.json();
+          alert("response logout ho gya " + resp.message);
+          navigate("/");
+        } else {
+          alert("logout failed");
+        }
+      } catch (err) {
+        console.log(" Logout problem ho rha h " + err);
+      }
+    } else {
+      console.log("User clicked NO");
+    }
+  };
   return (
     <div className='w-[40%] bg-[#8185B2]/10 text-white w-full relative overflow-y-scroll max-md:hidden'>
       <div className='pt-16 flex flex-col items-center gap-2 text-xs font-light mx-auto'>
@@ -21,7 +49,15 @@ const Rightsider = ({responsive,useritem, msglist}) => {
     </div>
       </div>
       <button  className='absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-400 to-violet-600 text-white border-none text-sm font-light py-2 px-20 rounded-full cursor-pointer'>
-        Logout
+       <div
+                  onClick={() => {
+                    LOGOUT();
+                  }}
+                  className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                >
+                  {" "}
+                  Logout{" "}
+                </div>{" "}
       </button>
     </div>
   )
