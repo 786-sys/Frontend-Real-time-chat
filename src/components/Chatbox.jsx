@@ -1,5 +1,6 @@
 import React, { use, useEffect, useState } from "react";
 import logo from "../assets/logo.jpg"
+import arrow from "../assets/arrow.png"
 import socket from "../Socket/socket.js";
 const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglist}) => {
   const [msg, setmsg] = useState("");
@@ -101,7 +102,6 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
         console.log("fetching user profile problem  " + err);
       }
     }
-
     const time = new Date().toLocaleTimeString();
 
     socket.emit("send_message", {
@@ -123,6 +123,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
     setImage(file);
     setPreview(URL.createObjectURL(file));
   };
+  
   console.log(msglist);
 
   const ONCHNAGE = (e) => {
@@ -157,7 +158,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
       <div className="flex justify-between items-center gap-3 py-3 mx-4 border-b border-stone-500 ">
         <div className="flex items-center gap-3">
           <img
-            src={useritem?.avatar !== "" ? logo : useritem.avatar}
+            src={useritem.avatar || logo  }
             alt="User Avatar"
             className="w-10 h-10 rounded-full"
           />
@@ -210,7 +211,6 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
                     src={isMe ? curr.avatar : useritem.avatar}
                     alt=""
                   />
-                  <p className="text-gray-500">{item.time}</p>
                 </div>
               </div>
             );
