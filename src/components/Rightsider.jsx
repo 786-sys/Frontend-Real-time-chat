@@ -1,5 +1,5 @@
 import React, { use } from 'react'
-
+import logo from "../assets/logo.jpg";
 
 
 const Rightsider = ({responsive,useritem, msglist}) => {
@@ -38,7 +38,7 @@ const Rightsider = ({responsive,useritem, msglist}) => {
 
     <div className='pt-16 flex flex-col items-center gap-2 text-xs font-light mx-auto'>
       <img
-        src={useritem?.avatar || '/src/assets/logo.jpg'}
+        src={useritem?.avatar || logo}
         className='max-w-[110px] rounded-lg object-cover shadow'
         alt=""
       />
