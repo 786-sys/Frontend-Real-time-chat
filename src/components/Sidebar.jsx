@@ -87,7 +87,7 @@ const Sidebar = ({
               className="h-[20px] rounded-[30px] cursor-pointer"
             />
             {isOpen && (
-              <div className="absolute left-[100px] top-[100px] bg-black text-white border border-gray-600 rounded-lg shadow-lg w-40">
+              <div className="absolute left-[150px] top-14 bg-black text-white border border-gray-600 rounded-lg shadow-lg w-40">
                 <div
                   onClick={() => {
                     navigate("/profile");
