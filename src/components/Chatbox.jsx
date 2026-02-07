@@ -123,7 +123,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
     setImage(file);
     setPreview(URL.createObjectURL(file));
   };
-  
+
   console.log(msglist);
 
   const ONCHNAGE = (e) => {
