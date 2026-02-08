@@ -236,8 +236,10 @@ const Chatbox = ({
                 {item.type === "video" && item.content && (
                   <video
                     src={item.content}
-                    alt="sent"
-                    className="max-w-[200px] rounded-lg mb-8 bg-violet-500/30 p-1"
+                    controls
+                    preload="metadata"
+                    poster={`${item.content}.jpg`}
+                    className="max-w-[220px] rounded-xl mb-8 bg-violet-500/20 p-1 shadow-md"
                   />
                 )}
 
