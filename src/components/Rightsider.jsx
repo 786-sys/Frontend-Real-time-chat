@@ -1,6 +1,6 @@
-import React, { use } from 'react'
-import logo from "../assets/logo.jpg";
-
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.jpg"
 
 const Rightsider = ({responsive,useritem, msglist}) => {
   const LOGOUT = async () => {
@@ -30,6 +30,7 @@ const Rightsider = ({responsive,useritem, msglist}) => {
       console.log("User clicked NO");
     }
   };
+    const navigate = useNavigate();
   return (
     <div className='w-[40%] bg-[#8185B2]/10 text-white w-full relative max-md:hidden'>
   

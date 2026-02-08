@@ -56,15 +56,12 @@ const Loginpage = () => {
       if (response.ok) {
         const resp = await response.json();
         alert(
-          "you logged in succesfuly " +
-            resp.user.email +
-            " " +
-            resp.user.description
+          "you logged in succesfuly"
         );
         navigate("/Homepage");
         // setregisteruser(resp.user);
       } else {
-        alert("login failed" + response.statusText);
+        alert("login failed with " + response.message);
       }
     } catch (err) {
       console.log("error" + err);
