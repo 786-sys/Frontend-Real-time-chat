@@ -1,8 +1,15 @@
 import React, { use, useEffect, useState } from "react";
-import logo from "../assets/logo.jpg"
-import arrow from "../assets/arrow.png"
+import logo from "../assets/logo.jpg";
+import arrow from "../assets/arrow.png";
 import socket from "../Socket/socket.js";
-const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglist}) => {
+const Chatbox = ({
+  responsive,
+  setselectedUser,
+  useritem,
+  curr,
+  msglist,
+  setmsglist,
+}) => {
   const [msg, setmsg] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -55,7 +62,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
       try {
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/message/display/${curr._id}/${useritem._id}`,
-          { method: "GET", credentials: "include" }
+          { method: "GET", credentials: "include" },
         );
 
         if (response.ok) {
@@ -75,11 +82,16 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
   }, [curr?._id, useritem?._id]);
 
   const handleSend = async () => {
+    if (msg.trim() === "" && !image) return; // prevent sending empty messages without an image
     let imageUrl = null;
 
     if (image) {
       const formData = new FormData();
-      formData.append("image", image);
+      if (image.type.startsWith("video/")) {
+        formData.append("video", image);
+      } else {
+        formData.append("image", image);
+      }
 
       try {
         const response = await fetch(
@@ -88,7 +100,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
             method: "POST",
             body: formData,
             credentials: "include",
-          }
+          },
         );
         if (response.ok) {
           const resp = await response.json();
@@ -103,12 +115,16 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
       }
     }
     const time = new Date().toLocaleTimeString();
+    let messageType = "text";
 
+    if (!msg && image) {
+      messageType = image.type.startsWith("video/") ? "video" : "image";
+    }
     socket.emit("send_message", {
       senderId: curr._id,
       receiverId: useritem._id,
       content: msg ? msg : imageUrl,
-      type: imageUrl ? "image" : msg ? "text" : "image",
+      type: messageType,
       time,
     });
     setmsg("");
@@ -120,6 +136,10 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
     const file = e.target.files[0];
     if (!file) return;
 
+    if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
+      alert("Please select an image or video file.");
+      return;
+    }
     setImage(file);
     setPreview(URL.createObjectURL(file));
   };
@@ -144,21 +164,22 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
         receiverId: useritem._id,
       });
     }, 10000);
-  };1 
-  const enterkrwalo=(e)=>{
-     if (e.key === "Enter") {
-    e.preventDefault();
-    handleSend();
-  }
-  }
+  };
+  1;
+  const enterkrwalo = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSend();
+    }
+  };
   return (
     <div className={`h-full relative backdrop-blur-lg w-[100%]`}>
       {/* Header */}
- 
+
       <div className="flex justify-between items-center gap-3 py-3 mx-4 border-b border-stone-500 ">
         <div className="flex items-center gap-3">
           <img
-            src={useritem.avatar || logo  }
+            src={useritem.avatar || logo}
             alt="User Avatar"
             className="w-10 h-10 rounded-full"
           />
@@ -167,11 +188,18 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
             {isonline.includes(useritem._id) ? <b>Online</b> : <b>Offline</b>}
           </p>
         </div>
-             <div className={`w-[20px] md:hidden`}>
-          <button onClick={()=>{setselectedUser(false)}}>
-            <img src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="" />
+        <div className={`w-[20px] md:hidden`}>
+          <button
+            onClick={() => {
+              setselectedUser(false);
+            }}
+          >
+            <img
+              src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png"
+              alt=""
+            />
           </button>
-      </div>
+        </div>
       </div>
 
       {/* Chat content */}
@@ -188,7 +216,7 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
               >
                 {/* TEXT MESSAGE */}
                 {console.log(
-                  "message item type " + item.type + " content " + item.content
+                  "message item type " + item.type + " content " + item.content,
                 )}
                 {item.content && (!item.type || item.type === "text") && (
                   <p className="p-2 max-w-[200px] md:text-sm font-light rounded-lg mb-8 break-all bg-violet-500/30 text-white rounded-br-none">
@@ -199,6 +227,14 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
                 {/* IMAGE MESSAGE */}
                 {item.type === "image" && item.content && (
                   <img
+                    src={item.content}
+                    alt="sent"
+                    className="max-w-[200px] rounded-lg mb-8 bg-violet-500/30 p-1"
+                  />
+                )}
+                {/* Video Processing */}
+                {item.type === "video" && item.content && (
+                  <video
                     src={item.content}
                     alt="sent"
                     className="max-w-[200px] rounded-lg mb-8 bg-violet-500/30 p-1"
@@ -231,7 +267,6 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
 
       <div className="flex flex-wrap fixed bottom-0 flex justify-between items-center gap-3 p-3 w-full mt-[20px] backdrop-blur-[40px] max-sm:bg-black/90">
         <div className="flex flex-wrap flex-1 md:flex-1 flex justify-between items-center bg-gray-100/12 px-3 rounded-full ">
-        
           <input
             className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-black placeholder-gray-400 "
             placeholder="Send the Message"
@@ -240,13 +275,15 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
             onChange={(e) => {
               ONCHNAGE(e);
             }}
-            onKeyDown={(e)=>{enterkrwalo(e)}}
+            onKeyDown={(e) => {
+              enterkrwalo(e);
+            }}
           />
 
-          <label htmlFor="image">
+          <label htmlFor="media">
             <input
-              id="image"
-              accept="image/png, image/jpeg"
+              id="media"
+              accept="image/png,image/jpeg,video/mp4,video/webm,video/ogg"
               type="file"
               hidden
               onChange={handleFileChange}
@@ -259,15 +296,15 @@ const Chatbox = ({responsive,setselectedUser, useritem, curr, msglist, setmsglis
           </label>
         </div>
 
-     <div>
-         <img className="h-[40px]"
-          src="data:image/svg+xml,%3csvg%20width='46'%20height='46'%20viewBox='0%200%2046%2046'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3ccircle%20cx='23'%20cy='23'%20r='23'%20fill='url(%23paint0_linear_8506_1288)'/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M18.3739%2027.7131C19.222%2029.2715%2021.9243%2034.2198%2021.9243%2034.2198C21.9243%2034.2198%2031.9224%2014.8584%2032.0811%2014.541L32.0938%2014.4839L18.3739%2027.7131ZM11.7676%2023.4282C11.7676%2023.4282%2016.4003%2026.2093%2017.6997%2026.9812L31.4463%2013.9062C29.8822%2014.6642%2011.7676%2023.4282%2011.7676%2023.4282Z'%20fill='white'/%3e%3cdefs%3e%3clinearGradient%20id='paint0_linear_8506_1288'%20x1='23'%20y1='0'%20x2='23'%20y2='46'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%23C263FE'/%3e%3cstop%20offset='1'%20stop-color='%237D36FE'/%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e"
-          alt="send"
-          onClick={handleSend}
-        />
-     </div>
+        <div>
+          <img
+            className="h-[40px]"
+            src="data:image/svg+xml,%3csvg%20width='46'%20height='46'%20viewBox='0%200%2046%2046'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3ccircle%20cx='23'%20cy='23'%20r='23'%20fill='url(%23paint0_linear_8506_1288)'/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M18.3739%2027.7131C19.222%2029.2715%2021.9243%2034.2198%2021.9243%2034.2198C21.9243%2034.2198%2031.9224%2014.8584%2032.0811%2014.541L32.0938%2014.4839L18.3739%2027.7131ZM11.7676%2023.4282C11.7676%2023.4282%2016.4003%2026.2093%2017.6997%2026.9812L31.4463%2013.9062C29.8822%2014.6642%2011.7676%2023.4282%2011.7676%2023.4282Z'%20fill='white'/%3e%3cdefs%3e%3clinearGradient%20id='paint0_linear_8506_1288'%20x1='23'%20y1='0'%20x2='23'%20y2='46'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%23C263FE'/%3e%3cstop%20offset='1'%20stop-color='%237D36FE'/%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e"
+            alt="send"
+            onClick={handleSend}
+          />
+        </div>
       </div>
-
     </div>
   );
 };
