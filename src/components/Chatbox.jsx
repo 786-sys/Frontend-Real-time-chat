@@ -238,7 +238,6 @@ const Chatbox = ({
                     src={item.content}
                     controls
                     preload="metadata"
-                    poster={`${item.content}.jpg`}
                     className="max-w-[220px] rounded-xl mb-8 bg-violet-500/20 p-1 shadow-md"
                   />
                 )}
