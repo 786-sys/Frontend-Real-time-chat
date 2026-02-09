@@ -3,7 +3,7 @@ import Sign from "../components/Sign.jsx";
 import Login from "../components/Login.jsx";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-
+import toast from "react-hot-toast";
 const Loginpage = () => {
   const [signtrue, setsigntrue] = useState(true);
   const navigate = useNavigate();
@@ -55,13 +55,11 @@ const Loginpage = () => {
       setloading(false);
       const resp = await response.json();
       if (response.ok) {
-        alert(
-          "you logged in succesfully"
-        );
+        toast.success("you logged in succesfuly");
         navigate("/Homepage");
         // setregisteruser(resp.user);
       } else {
-        alert("login failed with " + resp.message);
+        toast.error("login failed with " + resp.message);
       }
     } catch (err) {
       console.log("error" + err);

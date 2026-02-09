@@ -6,7 +6,9 @@ import Profilepage from "./Pages/Profilepage.jsx";
 import Loginpage from "./Pages/Loginpage.jsx";
 import socket from "./Socket/socket.js";
 import bgImage from "./assets/bgImage.svg"
+import { Toaster } from "react-hot-toast";
 function App() {
+  <Toaster position="top-right" reverseOrder={false} />
   useEffect(() => {
     socket.on("connect", () => {
       console.log("✅ Connected to socket:", socket.id);
@@ -15,7 +17,6 @@ function App() {
     socket.on("disconnect", () => {
       console.log("❌ Disconnected");
     });
-
     return () => {
       socket.off("connect");
       socket.off("disconnect");
