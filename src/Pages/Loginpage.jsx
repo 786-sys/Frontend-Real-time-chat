@@ -3,7 +3,7 @@ import Sign from "../components/Sign.jsx";
 import Login from "../components/Login.jsx";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 const Loginpage = () => {
   const [signtrue, setsigntrue] = useState(true);
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Loginpage = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ fullname, email, password, description }),
           credentials: "include",
-        }
+        },
       );
       if (response.ok) {
         const resp = await response.json();
@@ -30,7 +30,7 @@ const Loginpage = () => {
             resp.user.email +
             " " +
             resp.user.description +
-            resp.user.fullname
+            resp.user.fullname,
         );
         setsigntrue(false);
         // setregisteruser(resp.user);
@@ -49,17 +49,30 @@ const Loginpage = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
           credentials: "include",
-        }
+        },
       );
       console.log(response);
       setloading(false);
       const resp = await response.json();
       if (response.ok) {
-        toast.success("you logged in succesfuly");
+        await Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Login Successful",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+        });
         navigate("/Homepage");
-        // setregisteruser(resp.user);
       } else {
-        toast.error("login failed with " + resp.message);
+        await Swal.fire({
+          icon: "error",
+          title: "Login Failed",
+          text: resp.message || "Invalid email or password",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (err) {
       console.log("error" + err);
@@ -67,13 +80,13 @@ const Loginpage = () => {
   };
   return (
     <div className="min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl md:flex-row">
-     <div className="flex">
-         <img
-        className="w-[min(50vw,600px)] rounded-[100px]"
-        src={logo}
-        alt="Real Chat Logo"
-      />
-     </div>
+      <div className="flex">
+        <img
+          className="w-[min(50vw,600px)] rounded-[100px]"
+          src={logo}
+          alt="Real Chat Logo"
+        />
+      </div>
       {signtrue ? (
         <Sign
           register={Register}
@@ -93,7 +106,6 @@ const Loginpage = () => {
           password={{ password, setpassword }}
         />
       )}
-      
     </div>
   );
 };

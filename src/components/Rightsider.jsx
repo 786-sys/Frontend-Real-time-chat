@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.jpg"
-
+import Swal from "sweetalert2";
 const Rightsider = ({responsive,useritem, msglist}) => {
   const LOGOUT = async () => {
-    const isConfirmed = confirm("Are you sure you want to continue?");
 
-    if (isConfirmed) {
+    const isConfirmed = await Swal.fire({
+          title: "Are you sure?",
+          text: "You want to logout?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes",
+          cancelButtonText: "No",
+        });
+    if (isConfirmed.isConfirmed) {
       try {
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/logout`,
@@ -17,14 +24,29 @@ const Rightsider = ({responsive,useritem, msglist}) => {
           }
         );
         if (response.ok) {
-          const resp = await response.json();
-          alert("response logout ho gya " + resp.message);
+          const resp = await response.json()
+          await Swal.fire({
+                      icon: "success",
+                      title: "Logged Out Successfully",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
           navigate("/");
         } else {
-          alert("logout failed");
+          await Swal.fire({
+            icon: "error",
+            title: "Logout Failed",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
       } catch (err) {
-        console.log(" Logout problem ho rha h " + err);
+        await Swal.fire({
+          icon: "error",
+          title: "Connection error",
+          showConfirmButton: false,
+          timer: 1500,
+        })
       }
     } else {
       console.log("User clicked NO");
@@ -32,59 +54,54 @@ const Rightsider = ({responsive,useritem, msglist}) => {
   };
     const navigate = useNavigate();
   return (
-    <div className='w-[40%] bg-[#8185B2]/10 text-white w-full relative max-md:hidden'>
-  
-  {/* NEW FLEX WRAPPER */}
-  <div className="flex flex-col h-full overflow-y-scroll">
+    <div className="w-[30%] lg:w-[25%] bg-black/30 border-l border-white/5 text-white relative max-md:hidden overflow-hidden">
+      <div className="flex flex-col h-full overflow-y-auto custom-scrollbar">
+        <div className="pt-12 flex flex-col items-center gap-4 px-6 text-center">
+          <div className="relative">
+            <img
+              src={useritem?.avatar || logo}
+              className="w-24 h-24 rounded-2xl object-cover shadow-2xl border-2 border-white/10"
+              alt={useritem?.fullname}
+            />
+          </div>
+          <div className="space-y-1">
+            <h1 className="text-xl font-bold text-white tracking-tight">
+              {useritem?.fullname}
+            </h1>
+            <p className="text-xs text-gray-400 leading-relaxed px-4">
+              {useritem?.description || "No bio yet"}
+            </p>
+          </div>
+        </div>
 
-    <div className='pt-16 flex flex-col items-center gap-2 text-xs font-light mx-auto'>
-      <img
-        src={useritem?.avatar || logo}
-        className='max-w-[110px] rounded-lg object-cover shadow'
-        alt=""
-      />
-      <h1 className='px-10 text-xl font-medium mx-auto flex items-center gap-2'>
-        {useritem?.fullname}
-      </h1>
-      <p className='px-10 mx-auto'>{useritem?.description}</p>
-    </div>
-
-    <hr className='border-[#ffffff50] my-4' />
-
-    <div className='px-5 text-xs'>
-      <p>Media</p>
-      <div className='flex flex-row flex-wrap gap-2 mt-2'>
-        {msglist.map((item, index) => {
-          if (item.type === 'image') {
-            return (
+        <div className="mt-8 px-6">
+          <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4">Media Shared</h3>
+          <div className="grid grid-cols-3 gap-2">
+            {msglist.filter(item => item.type === 'image').slice(0, 9).map((item, index) => (
               <img
                 key={index}
                 src={item.content}
                 alt="media"
-                className='w-16 h-16 object-cover rounded-lg m-1'
+                className="aspect-square w-full object-cover rounded-lg border border-white/5 hover:opacity-80 transition-opacity cursor-pointer"
               />
-            );
-          }
-        })}
+            ))}
+            {msglist.filter(item => item.type === 'image').length === 0 && (
+              <p className="col-span-3 text-[10px] text-gray-600 italic text-center py-4">No media shared yet</p>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-auto p-6">
+          <button 
+            onClick={LOGOUT}
+            className="w-full py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-semibold rounded-xl border border-red-500/20 transition-all active:scale-[0.98]"
+          >
+            Logout session
+          </button>
+        </div>
       </div>
     </div>
-
-    {/* ✅ STICKS TO BOTTOM */}
-    <div className="flex justify-center items-center mt-auto py-4 text-xs text-gray-400">
-      <button className="px-3 py-1 bg-gradient-to-r from-purple-400 to-violet-600 text-white rounded-md cursor-pointer">
-        <div
-          onClick={LOGOUT}
-          className="px-4 py-2 cursor-pointer"
-        >
-          Logout
-        </div>
-      </button>
-    </div>
-
-  </div>
-</div>
-
-  )
-}
+  );
+};
 
 export default Rightsider

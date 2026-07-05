@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import logi from "../assets/logo.jpg"
+import logi from "../assets/logo.jpg";
 import socket from "../Socket/socket.js";
 import dots from "../assets/dots.jpg";
+import Swal from "sweetalert2";
 import { Navigate, useNavigate } from "react-router-dom";
-
+// setid is setuseritem
 const Sidebar = ({
   list,
   isonline,
@@ -12,13 +13,14 @@ const Sidebar = ({
   useritem,
   curr,
   setid,
-  user,
   setuser,
+  msglist,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [filteredList, setFilteredList] = useState(false);
   const [searchperson, setSearchperson] = useState("");
-  const [highlight,setHighlight]=useState(null);
+  const [highlight, setHighlight] = useState(null);
+  const [read, setread] = useState(false);
   const navigate = useNavigate();
   const changing = (e) => {
     setFilteredList(!filteredList);
@@ -34,10 +36,32 @@ const Sidebar = ({
     };
   }, []);
 
-  const LOGOUT = async () => {
-    const isConfirmed = confirm("Are you sure you want to continue?");
+  // useEffect(() => {
+  //   socket.emit("read_msg", { senderId: curr?._id, receiverId: useritem?._id });
+  // }, [msglist]);
 
-    if (isConfirmed) {
+  // useEffect(() => {
+  //   const handleRead = ({ senderId }) => {
+  //     if (senderId === useritem?._id) {
+  //       setread(true);
+  //     }
+  //   };
+  //   socket.on("read_msg", handleRead);
+  //   return () => {
+  //     socket.off("read_msg", handleRead);
+  //   };
+  // },[]);
+  const LOGOUT = async () => {
+    const isConfirmed = await Swal.fire({
+      title: "Are you sure?",
+      text: "You want to logout?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    });
+    console.log("isConfirmed value: ", isConfirmed);
+    if (isConfirmed.isConfirmed) {
       try {
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/logout`,
@@ -45,14 +69,24 @@ const Sidebar = ({
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
-          }
+          },
         );
         if (response.ok) {
           const resp = await response.json();
-          alert("response logout ho gya " + resp.message);
+          await Swal.fire({
+            icon: "success",
+            title: "Logged Out Successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           navigate("/");
         } else {
-          alert("logout failed");
+          await Swal.fire({
+            icon: "error",
+            title: "Logout Failed",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
       } catch (err) {
         console.log(" Logout problem ho rha h " + err);
@@ -63,147 +97,151 @@ const Sidebar = ({
   };
 
   const filteredUsers = list.filter((item) =>
-    item.fullname.toLowerCase().includes(searchperson.toLowerCase())
+    item.fullname.toLowerCase().includes(searchperson.toLowerCase()),
   );
   return (
-    <div className={`p-5 h-full flex flex-col`}>
+    <div className="h-full flex flex-col bg-black/20 backdrop-blur-md">
       {/* Header */}
-      <div className="py-5 px-3">
-        <div>
-          <div className="flex flex-row text-white justify-between p-[10px]  max-sm:p-[20px]">
-            <div className="flex flex-row gap-2">
+      <div className="p-4 space-y-4 border-b border-white/5">
+        <div className="flex items-center justify-between px-2">
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="logo" className="h-8 w-auto" />
+            <h1 className="text-white font-bold text-xl hidden sm:block">
+              Chats
+            </h1>
+          </div>
+
+          <div className="relative">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 hover:bg-white/10 rounded-full transition-colors"
+            >
               <img
-                src={logo}
-                alt="logo"
-                className="h-[35px]"
+                src={dots}
+                alt="menu"
+                className="h-5 w-5 invert opacity-70"
               />
-            </div>
-            <img
-              src={dots}
-              onMouseOver={() => {
-                setIsOpen(!isOpen);
-              }}
-              alt="menu"
-              className="h-[20px] rounded-[30px] cursor-pointer"
-            />
+            </button>
+
             {isOpen && (
-              <div className="absolute left-[150px] top-14 bg-black text-white border border-gray-600 rounded-lg shadow-lg w-40">
+              <div className="absolute right-0 top-12 bg-[#1a1a1a] text-white border border-white/10 rounded-xl shadow-2xl w-48 z-50 overflow-hidden animate-in fade-in zoom-in duration-200">
                 <div
                   onClick={() => {
+                    setIsOpen(false);
                     navigate("/profile");
                   }}
-                  className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                  className="px-4 py-3 hover:bg-white/5 cursor-pointer flex items-center gap-3 transition-colors border-b border-white/5"
                 >
-                  Edit Profile{" "}
+                  <span className="text-sm">Edit Profile</span>
                 </div>
                 <div
                   onClick={() => {
+                    setIsOpen(false);
                     LOGOUT();
                   }}
-                  className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                  className="px-4 py-3 hover:bg-red-500/20 text-red-400 cursor-pointer flex items-center gap-3 transition-colors"
                 >
-                  {" "}
-                  Logout{" "}
-                </div>{" "}
+                  <span className="text-sm">Logout</span>
+                </div>
               </div>
             )}
           </div>
         </div>
-        <div className="border border-white-200 rounded-xl">
+
+        <div className="relative group">
           <input
             value={searchperson}
-            className="bg-transparent border-none outline-none text-white text-xs placeholder-[#c8c8c8] flex-1 m-[5px] max-sm:mt-[7px]"
+            className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-4 text-white text-sm outline-none focus:ring-2 focus:ring-violet-500/50 transition-all placeholder-gray-500"
             type="text"
-            placeholder="Search"
-            onChange={(e) => {
-              changing(e);
-            }}
+            placeholder="Search messages or people"
+            onChange={changing}
           />
         </div>
       </div>
 
       {/* Scrollable list */}
-      <div
-        className="text-white p-5 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-violet-600 scrollbar-track-gray-800 mt-4 space-y-2"
-      >
+      <div className="flex-1 overflow-y-auto px-2 py-4 space-y-1 custom-scrollbar">
         {list.length !== 0 && !filteredList ? (
-          <div>
-            <label htmlFor="item">
-              {list.map((item, index) => {
-                return (
-                  <div
-                    onClick={() => {
-                      highlight===item._id?`${setHighlight(null)}}`:setHighlight(item._id);
-                      setuser(!user);  
-                      setid(item);
-                    }}
-                    id="item"
-                    key={index} 
-                    className={`relative flex items-center gap-2 p-2 pl-4 rounded cursor-pointer max-sm:text-sm false hover:bg-gray-700 ${highlight===item._id?'bg-gray-700':''}`} 
-                  >
-                    <img
-                      className="w-[35px] aspect-[1/1] rounded-full"
-                      src={item?.avatar || logi}
-                      alt=""
-                    />
+          <div className="space-y-1">
+            {list.map((item, index) => (
+              <div
+                key={item._id || index}
+                onClick={() => {
+                  setHighlight(item._id);
+                  setuser(true);
+                  setid(item);
+                }}
+                className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-200 group
+                  ${
+                    highlight === item._id
+                      ? "bg-violet-600/20 border-white/10"
+                      : "hover:bg-white/5 border-transparent"
+                  } border  ${read && highlight === item._id ? "border-green-500" : ""}`}
+              >
+                <div className="relative flex-shrink-0">
+                  <img
+                    className="w-12 h-12 rounded-full object-cover border border-white/10"
+                    src={item?.avatar || logi}
+                    alt={item.fullname}
+                  />
+                  {isonline.includes(item._id) && (
+                    <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-[#1a1a1a] rounded-full" />
+                  )}
+                </div>
 
-                    <div>
-                      <h3 className="flex item-center justify-start gap-2">
-                        {item.fullname}
-                        <div>
-                          {isonline.includes(item._id) ? (
-                            <span className="text-green-400 text-ls">●</span>
-                          ) : (
-                            <span className="text-gray-400 text-ls">●</span>
-                          )}
-                        </div>
-                      </h3>
-                      <span className="text-neutral-400 text-xs">
-                        {isonline.includes(item._id) ? "Online" : "Offline"}
-                      </span>
-                    </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between mb-0.5">
+                    <h3
+                      className={`font-semibold text-sm truncate ${highlight === item._id ? "text-violet-400" : "text-white"}`}
+                    >
+                      {item.fullname}
+                    </h3>
                   </div>
-                );
-              })}
-            </label>
+                  <p className="text-xs text-gray-400 truncate">
+                    {isonline.includes(item._id) ? "Active now" : "Offline"}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : list.length !== 0 && filteredList ? (
+          <div className="space-y-1">
+            {filteredUsers.map((item, index) => (
+              <div
+                key={item._id || index}
+                onClick={() => {
+                  setHighlight(item._id);
+                  setuser(true);
+                  setid(item);
+                }}
+                className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-200
+                  ${highlight === item._id ? "bg-violet-600/20" : "hover:bg-white/5"}`}
+              >
+                <div className="relative">
+                  <img
+                    className="w-12 h-12 rounded-full object-cover border border-white/10"
+                    src={item?.avatar || logi}
+                    alt={item.fullname}
+                  />
+                  {isonline.includes(item._id) && (
+                    <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-[#1a1a1a] rounded-full" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-white font-medium text-sm truncate">
+                    {item.fullname}
+                  </h3>
+                  <p className="text-xs text-gray-500">
+                    {isonline.includes(item._id) ? "Active now" : "Offline"}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
-          " "
-        )}
-        {list.length !== 0 && filteredList ? (
-          <div>
-            <label htmlFor="item">
-              {filteredUsers.map((item, index) => {
-                // if (searchperson === item.name) {
-                return (
-                  <div
-                    onClick={() => {
-                      setuser(true);
-                      setid(item);
-                    }}
-                    id="item"
-                    key={index}
-                    className="relative flex items-center gap-2 p-2 pl-4 rounded cursor-pointer max-sm:text-sm false hover:bg-gray-700"
-                  >
-                    <img
-                      className="w-[35px] aspect-[1/1] rounded-full"
-                      src={item?.avatar || logi}
-                      alt=""
-                    />
-                    <div>
-                      <h3>{item.fullname}</h3>
-                      <span className="text-neutral-400 text-xs">
-                        {isonline ? "Online" : "Offline"}
-                      </span>
-                    </div>
-                  </div>
-                );
-                // }
-              })}
-            </label>
+          <div className="flex flex-col items-center justify-center h-full opacity-40">
+            <p className="text-white text-sm">No conversations yet</p>
           </div>
-        ) : (
-          " "
         )}
       </div>
     </div>

@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { use, useEffect } from "react";
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Rightsider from "../components/Rightsider";
-import Chatbox from "../components/Chatbox";
+import Chatbox from "../components/chatbox.jsx";
 import Blankchat from "../components/Blankchat";
 import socket from "../Socket/socket.js";
-
+import Swal from "sweetalert2";
 const Homepage = ({responsive, array, itemuser, setitemuser, curr }) => {
   const [selectedUser, setselectedUser] = useState(false);
   const [isonline, setisonline] = useState([]);
@@ -20,19 +20,23 @@ const Homepage = ({responsive, array, itemuser, setitemuser, curr }) => {
       socket.off("online-users");
     };
   }, [curr?._id || itemuser?._id]);
+  
   console.log("homepage re rendered " + selectedUser);
+ 
+  
   return (
-    <div className={`border w-full h-screen sm:py-[15%] sm:py-[15%]`}>
+    <div className="w-full h-screen flex items-center justify-center sm:p-4 md:p-8 lg:p-12 overflow-hidden">
       <div
-        className={`flex flex-row absolute inset-[10%] 
-                  backdrop-blur-xl bg-black/30
-                  border-2 border-gray-600 rounded-2xl
-                  overflow-hidden`}
+        className="flex flex-row w-full h-full max-w-7xl 
+                  backdrop-blur-2xl bg-black/40
+                  sm:border sm:border-white/10 sm:rounded-2xl
+                  overflow-hidden shadow-2xl relative animate-in fade-in duration-500"
       >
+        {/* Sidebar Container */}
         <div
-          className={`md:w-[30%] max-sm:${selectedUser && 'hidden'}  max-sm:w-[100%]`}
+          className={`md:w-[30%] lg:w-[25%] border-r border-white/5 transition-all duration-300 ease-in-out
+                    ${selectedUser ? 'max-sm:-translate-x-full max-sm:hidden' : 'max-sm:translate-x-0 max-sm:w-full'}`}
         >
-
           <Sidebar
             list={array}
             isonline={isonline}
@@ -40,86 +44,39 @@ const Homepage = ({responsive, array, itemuser, setitemuser, curr }) => {
             useritem={itemuser}
             curr={curr}
             setid={setitemuser}
-            user={selectedUser}
             setuser={setselectedUser}
+            msglist={msglist}
           />
         </div>
-        {selectedUser ? (
-          <div
-            className={`flex flex-row flex-1 ${
-              responsive && selectedUser && "visible" && "w-[100%]"
-            }`}
-          >
-            <Chatbox
-              responsive={responsive}
-              setselectedUser={setselectedUser}
-              useritem={itemuser}
-              curr={curr}
-              msglist={msglist}
-              setmsglist={setmsglist}
-            />
-            <Rightsider
-              responsive={responsive}
-              useritem={itemuser}
-              msglist={msglist}
-            />
-          </div>
-        ) : (
-          <>
-            {/* {!selectedUser && !responsive && (
-              <div className={`w-full h-full`}>
-                <Blankchat setuser={setselectedUser} />
-              </div>
-            )} */}
-              <div className={`max-sm:hidden w-full h-full`}>
-                <Blankchat setuser={setselectedUser} />
-              </div>
-       
-          </>
-        )}
+
+        {/* Chat / Blank View Container */}
+        <div className={`flex-1 flex flex-row transition-all duration-300 ease-in-out
+                        ${selectedUser ? 'max-sm:translate-x-0' : 'max-sm:translate-x-full max-sm:hidden'}`}>
+          {selectedUser ? (
+            <div className="flex flex-row flex-1">
+              <Chatbox
+                responsive={responsive}
+                setselectedUser={setselectedUser}
+                useritem={itemuser}
+                curr={curr}
+                msglist={msglist}
+                setmsglist={setmsglist}
+              />
+              <Rightsider
+                responsive={responsive}
+                useritem={itemuser}
+                msglist={msglist}
+              />
+            </div>
+          ) : (
+            <div className="max-sm:hidden w-full h-full">
+              <Blankchat />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
 export default Homepage;
-{
-  /* {
-          responsive?<>
-           {
-            selectedUser?<>
-             <div className="flex flex-row flex-1">
-              <button>
-                <img onClick={()=>{setselectedUser(false)}} className="w-[20px]" src="https://www.vhv.rs/dpng/d/244-2446391_black-previous-button-png-transparent-image-arrow-png.png" alt="" />
-              </button>
-            <Chatbox useritem={itemuser} curr={curr} msglist={msglist} setmsglist={setmsglist} />
-          </div>  
-            </>: */
-}
-{
-  /* <Sidebar
-              responsive={responsive}
-              list={array}
-              isonline={isonline}
-              setisonline={setisonline}
-              useritem={itemuser}
-              curr={curr}
-              setid={setitemuser}
-              user={selectedUser}
-              setuser={setselectedUser}
-            />
-            {selectedUser ? (
-              <div className="flex flex-row flex-1">
-                <Chatbox
-                responsive={responsive}
-                  useritem={itemuser}
-                  curr={curr}
-                  msglist={msglist}
-                  setmsglist={setmsglist}
-                />
-                <Rightsider responsive={responsive} useritem={itemuser} msglist={msglist} />
-              </div>
-            ) : (
-              <Blankchat responsive={responsive} setuser={setselectedUser} />
-            )} */
-}

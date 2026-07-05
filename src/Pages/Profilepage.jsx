@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.jpg"
-
+import Swal from "sweetalert2";
 const Profilepage = () => {
   const [Name, setName] = useState("");
   const [textarea, settextarea] = useState("");
@@ -79,9 +79,20 @@ const Profilepage = () => {
         setUrl(resp.user.avatar);
         settextarea(resp.user.description);
         setName(Name);
-        alert("Avatar updated successfully");
+        await Swal.fire({
+          icon: "success",
+          title: "Profile Updated Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         navigate("/Homepage");
       } else {
+        await Swal.fire({
+          icon: "error",
+          title: "Profile Update Failed",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         console.log("Profile update failed " + response.statusText);
       }
     } catch (err) {

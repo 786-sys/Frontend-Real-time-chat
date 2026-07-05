@@ -18,75 +18,94 @@ const Sign = ({ register,setsigntrue ,fullname,email,password , description}) =>
     setisdesc(true);
   }
   return (
-    <div 
-      className="border-2 bg-white/8 text-white border-gray-500 p-6 flex flex-col gap-6 rounded-lg shadow-lg"
-    >
-      {!isdesc  ? <>
-      <h2 className="font-medium text-2xl flex justify-between items-center">
-        Sign up
-        {/* {fullname.fullname  +" "+email.email+" "+password.password} */}
-      </h2>
-        <input
-        className="p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
-        type="text"
-        onChange={(e)=>{fullname.setfullname(e.target.value)}}
-        required
-        placeholder="Fullname"
-        value={fullname.fullname}
-      />
-      <input
-        className="p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
-        type="email"
-        onChange={(e) => {
-          email.setemail(e.target.value);
-        }}
-        required
-        placeholder="email"
-        value={email.email}
-      />
-      <input
-        className="p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
-        type="password"
-        onChange={(e) => {
-          password.setpassword(e.target.value);
-        }}
-        required
-        placeholder="password"
-        value={password.password}
-      />
-      <button onClick={(e)=>{dekhozara(e)}} className="py-3 bg-gradient-to-r from-purple-400 to-violet-600 text-white rounded-md cursor-pointer">
-        Create Accoutnt 
-      </button>
-      </>
-      :
-    <>
-      <div className="flex flex-row item-center justify-between">
-        <h2 className="font-medium text-2xl flex justify-between items-center">
-        Sign up
-      </h2>
-      
-      <img onClick={()=>{setisdesc(false)}} className="w-5 cursor-pointer" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAABCCAYAAAACPxW5AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAH7SURBVGhD7dq/SsNQFMfxJnYQHBxKUereIV2d3ARxc+sTCILgQ/QpdBKfIEgnH8HZoQ0FZ0cn8c9QuN5fORERmya5f865cL9LuJcM+ZBwh0M6sVgsFoutb4uuIppMJulgMOjNZrMP2jIupauEkvl8fr1cLh/H4/EB7RmX0JW7RKNukiS5pPWzUuo4z/MXWrdOAvAvrswKkhu4DldmjOQEbsKVGSFZTlGclv1+/1bjLmirqp6+7yzLsvuiKN5or3Ycp+jqtNQPfU7rjek3+K5P1y9aNsr3J1r3s/xJ45407mQ6nb7SVqN8Ar3jkC8gCw75ALLhkGsgKw65BLLjkCugCBxyARSDQ7aBonDIJlAcDtkCisQhG0CxOGQKFI1DJkDxONQWGAQOtQEGg0NNgUHhUBNgcDgkafDrpEZDp6IoHrIs29Nv8ZC2KtP37adpejocDvPFYvFJ215rPFULDdlqbBgSsvVcNBSk0eA3BKQREElHGgORZKQVIJKKtAZEEpFWgUga0joQSUI6ASIpSGdAJAHpFIi4kc6BiBPpBYi4kN6AiAPpFYh8IzlGFmo0Gl0ppe5ovTGN3Ol2u9u0bJTJ4Ne0ukOs8H4EKqvxuRr/ysUKRBVIKz/jsQPRP0grOCQCiH4hd23hkKTB7+p01aflkS1cLBaLxWKVdTrf5kX+OXj25HwAAAAASUVORK5CYII=" alt="" />
-      </div>
-            <Desc description={description} register={register} isdesc={isdesc} setisdesc={setisdesc}/>
-      </>
-      }
-     
-      <div className="flex items-center gap-2 text-sm text-gray-500">
-        <input type="checkbox" required />
-        <p>Agree to terms and condition apply</p>
-      </div>
-      <div className="flex flex-col gap-2">
-        <p className="text-sm text-gray-600">
-          Already have an account
-          <span
-            onClick={() => {
-              setsigntrue(false);
-            }}
-            className="font-medium text-white cursor-pointer m-2"
-          >
-            Login here
-          </span>
-        </p>
+    <div className="w-full max-w-md bg-[#1a1a1a]/80 backdrop-blur-2xl border border-white/10 p-8 rounded-3xl shadow-2xl animate-in fade-in zoom-in duration-500">
+      {!isdesc ? (
+        <>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-white mb-2">Create Account</h2>
+            <p className="text-gray-400 text-sm">Join our community today</p>
+          </div>
+
+          <div className="space-y-4">
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-gray-400 ml-1">Full Name</label>
+              <input
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm outline-none focus:ring-2 focus:ring-violet-500/50 transition-all placeholder-gray-600"
+                type="text"
+                onChange={(e) => fullname.setfullname(e.target.value)}
+                required
+                placeholder="John Doe"
+                value={fullname.fullname}
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-gray-400 ml-1">Email Address</label>
+              <input
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm outline-none focus:ring-2 focus:ring-violet-500/50 transition-all placeholder-gray-600"
+                type="email"
+                onChange={(e) => email.setemail(e.target.value)}
+                required
+                placeholder="name@example.com"
+                value={email.email}
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-gray-400 ml-1">Password</label>
+              <input
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm outline-none focus:ring-2 focus:ring-violet-500/50 transition-all placeholder-gray-600"
+                type="password"
+                onChange={(e) => password.setpassword(e.target.value)}
+                required
+                placeholder="••••••••"
+                value={password.password}
+              />
+            </div>
+
+            <button 
+              onClick={dekhozara} 
+              className="w-full py-3.5 mt-4 bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg shadow-violet-600/20 hover:opacity-90 active:scale-[0.98] transition-all"
+            >
+              Continue
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="flex items-center justify-between mb-8">
+            <button 
+              onClick={() => setisdesc(false)}
+              className="p-2 -ml-2 hover:bg-white/10 rounded-full transition-colors text-gray-400 hover:text-white"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <h2 className="text-xl font-bold text-white">Tell us about yourself</h2>
+            <div className="w-8" /> {/* Spacer */}
+          </div>
+          <Desc description={description} register={register} isdesc={isdesc} setisdesc={setisdesc} />
+        </>
+      )}
+
+      <div className="mt-6 space-y-4">
+        <div className="flex items-center gap-2 text-xs text-gray-500">
+          <input type="checkbox" className="w-4 h-4 rounded border-white/10 bg-white/5 accent-violet-600" required />
+          <p>I agree to the Terms and Conditions</p>
+        </div>
+
+        <div className="pt-6 border-t border-white/5 text-center">
+          <p className="text-sm text-gray-400">
+            Already have an account?
+            <span
+              onClick={() => setsigntrue(false)}
+              className="ml-2 font-semibold text-violet-400 hover:text-violet-300 cursor-pointer transition-colors"
+            >
+              Login
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );
