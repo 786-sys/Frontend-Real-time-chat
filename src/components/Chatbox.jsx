@@ -1,6 +1,5 @@
 import React, { use, useEffect, useState } from "react";
 import logo from "../assets/logo.jpg";
-import arrow from "../assets/arrow.png";
 import socket from "../Socket/socket.js";
 const Chatbox = ({
   responsive,
@@ -27,19 +26,28 @@ const Chatbox = ({
     socket.emit("join", curr._id);
     // receiver side
     socket.on("receive_message", (data) => {
-      setmsglist((prev) => [...prev, data]);
+      const isCurrentConversation =
+        (String(data.senderId) === String(useritem._id) &&
+          String(data.receiverId) === String(curr._id)) ||
+        (String(data.senderId) === String(curr._id) &&
+          String(data.receiverId) === String(useritem._id));
+      if (isCurrentConversation) {
+        setmsglist((prev) => [...prev, data]);
+      }
     });
 
     // sender confirmation (optional but good)
     socket.on("message_sent_confirmation", (data) => {
-      setmsglist((prev) => [...prev, data]);
+      const isCurrentConversation =
+        (String(data.senderId) === String(useritem._id) &&
+          String(data.receiverId) === String(curr._id)) ||
+        (String(data.senderId) === String(curr._id) &&
+          String(data.receiverId) === String(useritem._id));
+
+      if (isCurrentConversation) {
+        setmsglist((prev) => [...prev, data]);
+      }
     });
-    socket.on("message_delivered", (data) => {
-      setmsglist((prev) =>
-        prev.map((msg) => (msg.id === data.id ? { ...msg, status: 'delivered' } : msg))
-      );
-    })
-    
 
     // 🔹 online users list
     socket.on("online-users", (users) => {
@@ -59,7 +67,7 @@ const Chatbox = ({
       socket.off("user_typing");
       socket.off("user_stop_typing");
     };
-  }, [curr._id]);
+  }, [curr._id, useritem._id]);
   /* ================= FETCH MESSAGES ================= */
   useEffect(() => {
     if (!curr?._id || !useritem?._id) return;
@@ -87,9 +95,7 @@ const Chatbox = ({
     loadMessages();
   }, [curr?._id, useritem?._id]);
 
-useEffect(()=>{
-     
-},[msglist])
+  useEffect(() => {}, [msglist]);
   const handleSend = async () => {
     if (msg.trim() === "" && !image) return; // prevent sending empty messages without an image
     let imageUrl = null;
@@ -268,7 +274,7 @@ useEffect(()=>{
                     {item.content && (!item.type || item.type === "text") && (
                       <p className="leading-relaxed">{item.content}</p>
                     )}
-                   
+
                     {/* IMAGE MESSAGE */}
                     {item.type === "image" && item.content && (
                       <div className="relative group">
@@ -298,21 +304,17 @@ useEffect(()=>{
                       />
                     )}
                     {/* //single tick */}
-                    {
-                      item.status === 'sent' && isMe && (
-                        <span className="text-[10px] text-white-400 mt-1 px-1">
-                          Sent
-                        </span>
-                      )
-                    }
+                    {item.status === "sent" && isMe && (
+                      <span className="text-[10px] text-white-400 mt-1 px-1">
+                        Sent
+                      </span>
+                    )}
                     {/* //double tick */}
-                    {
-                      item.status === 'delivered' && isMe && (
-                        <span className="text-[10px] text-white-400 mt-1 px-1">
-                          Delivered
-                        </span>
-                      )
-                    }
+                    {item.status === "delivered" && isMe && (
+                      <span className="text-[10px] text-white-400 mt-1 px-1">
+                        Delivered
+                      </span>
+                    )}
                   </div>
 
                   {/* Timestamp could go here if available */}
@@ -320,7 +322,7 @@ useEffect(()=>{
                     {item.time ||
                       new Date().toLocaleTimeString([], {
                         hour: "2-digit",
-                          minute: "2-digit",
+                        minute: "2-digit",
                       })}
                   </span>
                 </div>
@@ -344,7 +346,7 @@ useEffect(()=>{
             <p className="text-white text-sm">No messages yet</p>
           </div>
         )}
-        
+
         {isTypingUser === useritem._id && (
           <div className="flex items-center gap-2 animate-pulse">
             <div className="flex gap-1">
