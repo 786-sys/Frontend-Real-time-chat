@@ -2,7 +2,7 @@ import React, { use, useEffect } from "react";
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Rightsider from "../components/Rightsider";
-import Chatbox from "../components/chatbox.jsx";
+import Chatbox from "../components/chatbox";
 import Blankchat from "../components/Blankchat";
 import socket from "../Socket/socket.js";
 import Swal from "sweetalert2";
