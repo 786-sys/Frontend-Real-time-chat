@@ -36,6 +36,7 @@ function App() {
     });
  
   const Display = async () => {
+    console.log("Display function called");
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/DisplayList`,
@@ -58,7 +59,7 @@ function App() {
   };
   useEffect(() => {
     Display();
-  }, []);
+  },[]);
   const GetUserProfile = async () => {
     try {
       const response = await fetch(
@@ -85,26 +86,28 @@ function App() {
   };
   useEffect(() => {
     GetUserProfile();
-  }, []);
+  },[]);
 
   return (
     <>
       <div className={`bg-[url(${bgImage})] bg-cover bg-center h-screen w-full`}>
         <Routes>
+          <Route path="/" element={<Loginpage />} />
           <Route
             path="/Homepage"
             element={
               <Homepage
                 responsive={responsive}
                 array={array}
+                setarray={setarray}
                 itemuser={itemuser}
                 setitemuser={setitemuser}
                 curr={curr}
+                setcurr={setcurr}
               />
             }
           />
           <Route path="/profile" element={<Profilepage />} />
-          <Route path="/" element={<Loginpage />} />
         </Routes>
       </div>
     </>

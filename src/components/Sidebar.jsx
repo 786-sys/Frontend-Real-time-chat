@@ -5,6 +5,8 @@ import socket from "../Socket/socket.js";
 import dots from "../assets/dots.jpg";
 import Swal from "sweetalert2";
 import { Navigate, useNavigate } from "react-router-dom";
+
+import notificationSound from "../assets/mixkit-elevator-tone-2863.wav"; // Import the notification sound file
 // setid is setuseritem
 const Sidebar = ({
   list,
@@ -15,12 +17,14 @@ const Sidebar = ({
   setid,
   setuser,
   msglist,
+  data,
+  setdata,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [filteredList, setFilteredList] = useState(false);
   const [searchperson, setSearchperson] = useState("");
   const [highlight, setHighlight] = useState(null);
-  const [read, setread] = useState(false);
+  const [Count, setCount] = useState(0);
   const navigate = useNavigate();
   const changing = (e) => {
     setFilteredList(!filteredList);
@@ -35,23 +39,57 @@ const Sidebar = ({
       socket.off("online-users");
     };
   }, []);
+  useEffect(() => {
+    if (
+      String(data[0]?.senderId) === String(useritem?._id) ||
+      String(data[0]?.receiverId) === String(useritem?._id)
+    ) {
+      setHighlight(null);
+      // playNotification();
+      alert("You have a new message from " + useritem?.fullname);
+    } else {
+      
+      setCount(data.length == 0 ? 0 : data.length);
+      setHighlight(data[0]?.senderId || data[0]?.receiverId);
+      
+    }
+    if(data.length > 0){
+      playNotification();
+    }
 
-  // useEffect(() => {
-  //   socket.emit("read_msg", { senderId: curr?._id, receiverId: useritem?._id });
-  // }, [msglist]);
-
-  // useEffect(() => {
-  //   const handleRead = ({ senderId }) => {
-  //     if (senderId === useritem?._id) {
-  //       setread(true);
-  //     }
-  //   };
-  //   socket.on("read_msg", handleRead);
-  //   return () => {
-  //     socket.off("read_msg", handleRead);
-  //   };
-  // },[]);
-  const LOGOUT = async () => {
+  }, [data]);
+  //i want to write for backend api for wheter the message is read or not and then i will use that api in the frontend to set the read state to true or false
+  const handleRead = async (senderId, receiverId) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/message/markAsRead`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            senderId: senderId,
+            receiverId: receiverId,
+          }),
+        },
+      );
+      if (response.ok) {
+        const resp = await response.json();
+        console.log("Message marked as read: ", resp);
+        setHighlight(null);
+        setCount(0);
+        setdata([]); // Clear the data state after marking messages as read
+      }
+    } catch (err) {
+      console.log("Error marking message as read: " + err);
+    }
+  };
+  const playNotification = () => {
+    const audio = new Audio(notificationSound);
+    audio.volume = 0.5; // 0.0 - 1.0
+    audio.play().catch((err) => console.log(err));
+  };
+  async function LOGOUT() {
     const isConfirmed = await Swal.fire({
       title: "Are you sure?",
       text: "You want to logout?",
@@ -94,7 +132,7 @@ const Sidebar = ({
     } else {
       console.log("User clicked NO");
     }
-  };
+  }
 
   const filteredUsers = list.filter((item) =>
     item.fullname.toLowerCase().includes(searchperson.toLowerCase()),
@@ -167,16 +205,16 @@ const Sidebar = ({
               <div
                 key={item._id || index}
                 onClick={() => {
-                  setHighlight(item._id);
                   setuser(true);
                   setid(item);
+                  handleRead(curr?._id, item?._id);
                 }}
                 className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-200 group
                   ${
                     highlight === item._id
                       ? "bg-violet-600/20 border-white/10"
                       : "hover:bg-white/5 border-transparent"
-                  } border  ${read && highlight === item._id ? "border-green-500" : ""}`}
+                  } border ${highlight === item._id ? `border-green-500 text-black  text-white ` : ""}`}
               >
                 <div className="relative flex-shrink-0">
                   <img
@@ -200,6 +238,13 @@ const Sidebar = ({
                   <p className="text-xs text-gray-400 truncate">
                     {isonline.includes(item._id) ? "Active now" : "Offline"}
                   </p>
+                </div>
+                <div>
+                  {Count > 0 && highlight === item._id && (
+                    <span className="flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
+                      {Count}
+                    </span>
+                  )}
                 </div>
               </div>
             ))}

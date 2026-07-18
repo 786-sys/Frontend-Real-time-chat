@@ -1,6 +1,7 @@
 import React, { use, useEffect, useState } from "react";
 import logo from "../assets/logo.jpg";
 import socket from "../Socket/socket.js";
+import { set } from "mongoose";
 const Chatbox = ({
   responsive,
   setselectedUser,
@@ -8,6 +9,8 @@ const Chatbox = ({
   curr,
   msglist,
   setmsglist,
+  data,
+  setdata
 }) => {
   const [msg, setmsg] = useState("");
   const [image, setImage] = useState(null);
@@ -31,8 +34,11 @@ const Chatbox = ({
           String(data.receiverId) === String(curr._id)) ||
         (String(data.senderId) === String(curr._id) &&
           String(data.receiverId) === String(useritem._id));
+
       if (isCurrentConversation) {
         setmsglist((prev) => [...prev, data]);
+      }else{
+        setdata((prev) => [...prev, data]);
       }
     });
 
@@ -67,7 +73,7 @@ const Chatbox = ({
       socket.off("user_typing");
       socket.off("user_stop_typing");
     };
-  }, [curr._id, useritem._id]);
+  }, [curr?._id, useritem?._id]);
   /* ================= FETCH MESSAGES ================= */
   useEffect(() => {
     if (!curr?._id || !useritem?._id) return;
@@ -359,6 +365,9 @@ const Chatbox = ({
             </span>
           </div>
         )}
+        <div className="h-3">
+
+        </div>
       </div>
 
       {/* Input bar */}
